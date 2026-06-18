@@ -1,69 +1,23 @@
-<p align="center">
-  <!-- Replace with your logo -->
-  <img width="100" src="screenshots/logo.png" alt="Dhaga.Thread Logo"/>
-</p>
-
-<h1 align="center">Dhaga.Thread</h1>
+# <p align="center"><img align="center" width="90" src="screenshots/logo.png"/><br>Dhaga.Thread</p>
+<h2 align="center">A Premium Digital Ecosystem for India's Wool Shepherds, Artisans, and Buyers</h2>
+<hr>
 
 <p align="center">
-  <b>From Pasture to Product — India's First End-to-End Wool Intelligence Platform</b>
+  <b>Dhaga.Thread</b> is a comprehensive, role-based mobile web application designed to streamline, track, and digitize the wool supply chain in India — from shearing and sorting to quality testing, trading, and final fabric creation. Supported by the <b>Ministry of Textiles, Government of India</b>, the platform empowers shepherds, weavers, logistics managers, and veterinary service providers through a unified visual interface.
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/SIH%202023-Winner%20🏆-gold?style=for-the-badge"/>
+  <img src="https://img.shields.io/badge/Status-SIH%20Winner-gold?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Platform-Web%20%7C%20Mobile-blue?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/Multilingual-8+%20Languages-green?style=for-the-badge"/>
   <img src="https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge"/>
 </p>
 
-<p align="center">
-  <!-- Replace with a real project banner/screenshot -->
-  <img src="screenshots/sih23.JPG" width="100%" alt="Team Vizion — SIH 2023 Winners"/>
-</p>
-
----
-
-## 🏆 Award
-
-> **Winner — Smart India Hackathon 2023 (SIH 2023)**  
-> Built by **Team Vizion** in response to the Ministry of Textiles problem statement on digitising India's unorganised wool sector.
-
----
-
-## 📖 The Problem
-
-India's wool industry is the **last unorganised frontier** in the textile sector.
-
-- Shepherds sell at rock-bottom prices due to **zero market visibility**
-- No single platform connects farmers, processors, buyers, and logistics
-- Outdated pre- and post-loom processing with **no digital quality assurance**
-- No centralised resource for education or market trends
-- Most shepherds rear sheep **not by choice, but by lack of alternatives**
-
-**Dhaga.Thread** exists to change that.
-
----
-
-## 💡 What is Dhaga.Thread?
-
-**Dhaga.Thread** is a **role-based, multilingual, all-in-one wool management platform** that digitises the entire journey of wool — from the sheep on a hillside farm to the finished fabric on a store shelf.
-
-It serves every stakeholder in the wool value chain under a single roof:
-
-| Role | What they get |
-|---|---|
-| 🐑 **Farmer / Shepherd** | Wool tracking, reverse bidding, warehouse & transport access |
-| 🏭 **Service Providers** | Shearing, sorting, dyeing job listings and service discovery |
-| 📦 **Buyers & Sellers** | Live marketplace, negotiation tools, bulk purchase flows |
-| 🎓 **Educators** | Upload and host live/recorded training sessions for farmers |
-| ✅ **Quality Inspectors** | Digital grading and certified quality assurance reports |
-| 🚛 **Transport & Warehouse** | Logistics listings, inventory management dashboard |
-
 ---
 
 ## 🛠️ System Architecture
 
-**Dhaga.Thread** is built on a robust Model-View-Controller (MVC) architecture, designed for lightweight mobile performance and seamless integration with cloud infrastructure.
+**Dhaga.Thread** is built on a robust Model-View-Controller (MVC) architecture, designed for lightweight mobile performance and seamless integration with cloud database and authentication services.
 
 ```mermaid
 graph TD
@@ -105,62 +59,38 @@ graph TD
 
 ## ✨ Key Features
 
-### 🗺️ Real-Time Wool Tracking
-Follow your wool from farm to factory gate. Every handoff, warehouse stop, and transport leg is logged and visible to all authorised parties.
+### 1. 🛒 WoolKart Marketplace & Checkout
+- **Premium Showcase**: High-resolution generated images showcasing premium raw wools (Alpaca, Vicuna) and finished garments.
+- **Client-Side Filters**: Instant, modern filter chips (All, Raw Wool, Finished Goods) in the brand's Ivory and Gold theme.
+- **Dynamic Checkout**: Interactive quantity calculator, unit cost multiplication, and instant total price estimation.
+- **Wallet PIN Verification**: Simulates secure escrow account payments (demo PIN code: `1111`) with custom success and error modals.
 
-### 📈 Live Market Intelligence
-Real-time wool prices, trend charts, and industry news so farmers can time their sales for **maximum profit** — not convenience of middlemen.
+### 2. 🗺️ Responsive Learning Roadmap
+- **Stepped Timeline Progress**: Replaces fragile point maps with a clean, fully responsive vertical roadmap timeline showing modular breeding, shearing, grading, and marketing modules.
+- **Status Indicators**: Tracks completed modules with checkmarks, highlights active lessons with pulsing gold rings, and locks upcoming lessons with elegant icons using browser `localStorage` persistence.
+- **Video Modals & Meeting Booking**: Launch inline video playback modals directly from timeline checkpoints, book expert classes, and join video consultations integrated with Jitsi Meet.
 
-### 🔄 Reverse Bidding Marketplace
-Farmers list their wool; buyers compete. Power finally shifts to the producer.
-
-### 🎓 Education & Training Hub
-Live and recorded sessions by certified educators. State-wise and region-wise producer directory. Skill-building resources tailored for the ground-level farmer.
-
-### ✅ Quality Assurance & Certification
-Digital grading workflow for quality inspectors. Certified QA reports are issued on-platform, giving buyers confidence and farmers a premium price lever.
-
-### 🏪 Online Wool Marketplace
-Direct farmer-to-buyer transactions with escrow-protected payments — no middlemen taking a cut.
-
-### 📦 Warehouse & Logistics Integration
-Book storage, manage inventory, and arrange transport — all from the same app.
-
-### 🌐 Native Multilingual Support
-Built for Bharat, not just metros. Supports 8+ Indian languages so every shepherd, wherever they are, can use the platform in their own tongue.
-
----
-
-## 💼 Business Model
-
-**Dhaga.Thread** is built for long-term sustainability:
-
-1. **Escrow-based payment system** — a small fee on every transaction ensures trust between farmers and buyers while generating platform revenue.
-2. **Quality Assurance Certification fee** — inspectors charge for grading; **Dhaga.Thread** takes a platform cut, creating a recurring revenue stream.
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|---|---|
-| **Frontend** | EJS, CSS3, SASS, Bootstrap |
-| **Backend** | Node.js, Express.js |
-| **Database** | Supabase (PostgreSQL) / MongoDB (Fallback) |
-| **Deployment** | Vercel / Render / Heroku |
+### 3. 🛡️ Professional Services Portal
+- **Sleek Veterinary Scheduling**: Request urgent or routine animal checkups, complete with modern banner assets and clear cost estimates.
+- **Support Modules**: Register for government insurance schemes, check nearby sorting centers, schedule transport logistics, or hire shearing teams.
+- **Ivory Loading Screen**: A customized screen loader that provides feedback for network requests without blocking the interface.
 
 ---
 
 ## ⚡ Supabase Authentication & Database Integration
 
-To activate the cloud database and auth integration, create a `.env` file in the root directory:
+**Dhaga.Thread** is production-ready. By setting up environment variables, the system automatically transitions from local demo fallback into an active Supabase cloud instance.
+
+### 1. Environment Variable Configuration
+To activate the cloud integration, create a `.env` file in the root directory:
 
 ```env
 SUPABASE_URL=https://your-project-id.supabase.co
 SUPABASE_KEY=your-supabase-anon-key
 ```
 
-### Supabase PostgreSQL Tables Schema
+### 2. Supabase PostgreSQL Tables Schema
+Create the following tables in the Supabase SQL Editor:
 
 #### `profiles` Table (User profiles and roles)
 ```sql
@@ -203,36 +133,51 @@ create policy "Users can view and manage their own meetings." on public.meetings
 
 ---
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Frontend** | EJS, CSS3, SASS, Bootstrap 5, Splide.js |
+| **Backend** | Node.js, Express.js |
+| **Database** | Supabase (PostgreSQL) / MongoDB (Fallback) |
+| **Deployment** | Vercel / Render / Heroku |
+
+---
+
+## 🚀 How to Run Locally
 
 ### Prerequisites
-- Node.js v18+
-- Supabase account (or local demo mode runs by default)
+- Install **NodeJS** (v18+) from the [Official NodeJS Website](https://nodejs.org/).
+- Ensure **git** is installed on your local machine.
 
-### Installation
+### Installation Steps
 
-```bash
-# 1. Clone the repository
-git clone https://github.com/praveshjainnn/Dhaga-.-Thread.git
-cd Dhaga-.-Thread
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/praveshjainnn/Dhaga-.-Thread.git
+   cd Dhaga-.-Thread
+   ```
 
-# 2. Install dependencies
-npm install
+2. **Install Dependencies**
+   ```bash
+   npm install
+   ```
 
-# 3. Set up environment variables (optional for Supabase cloud activation)
-cp .env.example .env
+3. **Start the Express Server**
+   ```bash
+   npm start
+   ```
 
-# 4. Start the development server
-npm start
-```
-
-The app will be running at `http://localhost:4000`
+4. **Explore the App**
+   Open your browser and navigate to **`http://localhost:4000`**. 
+   
+   > 📱 *Note: Since Dhaga.Thread is designed as a premium mobile web portal, enable the device emulator (Ctrl+Shift+M or Cmd+Shift+M in Chrome DevTools) and select a mobile viewport (e.g. iPhone 12/14 Pro) for the best experience.*
 
 ---
 
 ## 🔑 Demo Logins
 
-Try the live platform without registering:
+Try the live platform without registering (in local demo mode):
 
 | Role | Email | Password |
 |---|---|---|
@@ -240,62 +185,19 @@ Try the live platform without registering:
 | 🎓 Teacher | `teacher@admin.com` | `1234@` |
 | 🚛 Transport | `transport@admin.com` | `1234@` |
 
-> 📱 **Best viewed on mobile.** Enable Chrome DevTools mobile view for the full premium experience.
-
 ---
 
-## 🌐 Live Links
-
-| Resource | Link |
-|---|---|
-| 🌍 Live App | [knitkraft.onrender.com](https://knitkraft.onrender.com/) |
-| 📊 Pitch Deck | [View on Canva](https://www.canva.com/design/DAGP_9EsdGI/WQJE7HY9nDG7qmt9gBuDuA/edit) |
-
----
-
-## 📸 Screenshots
-
-| Home | Marketplace | Tracking |
-|---|---|---|
-| ![Home](screenshots/home.png) | ![Marketplace](screenshots/marketplace.png) | ![Tracking](screenshots/tracking.png) |
-
----
-
-## 🗂️ Project Structure
+## 🌐 Project Structure
 
 ```
 dhaga-thread/
-├── views/           # EJS templates
-├── public/          # Static assets (CSS, JS, images)
-├── routes/          # Express route handlers
-├── models/          # Data models
-├── src/             # Source logic (DB connectors)
-└── app.js           # Entry point
+├── views/           # EJS templates & layouts
+├── public/          # Static assets (custom CSS, JS, images)
+├── routes/          # Express route handlers (MVC Controllers)
+├── models/          # Schema definitions
+├── src/             # Source logic (DB connections & Supabase service)
+└── app.js           # Express Application entry point
 ```
-
----
-
-## 🤝 Contributing
-
-Pull requests are welcome! For major changes, please open an issue first to discuss what you'd like to change.
-
-1. Fork the repo
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
----
-
-## 👥 Team Vizion
-
-Built with ❤️ for India's 🐑 shepherds and the wool industry.
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
 
 ---
 
@@ -304,4 +206,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
   Dhaga.Thread is built to change that — one thread at a time."</i>
 </p>
 
-<p align="center">— Team Vizion, SIH 2023 Champions 🏆</p>
+<p align="center">🧶 Dhaga.Thread — Spinning India's Wool Future 🧶</p>
