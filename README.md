@@ -51,7 +51,7 @@ India is the **4th largest wool producer** in the world — yet most shepherds s
 Dhaga.Thread is built on a clean **MVC architecture** optimized for lightweight mobile performance and cloud-native scalability.
 
 <p align="center">
-  <img src="./screenshots/SystemArchitecture.png" width="900">
+  <img src="./screenshots/System Architecture.png" width="900">
 </p>
 
 ## 🗂️ Project Structure
