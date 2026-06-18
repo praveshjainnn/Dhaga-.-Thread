@@ -50,9 +50,8 @@ India is the **4th largest wool producer** in the world — yet most shepherds s
 ## 🏗️ System Architecture
 Dhaga.Thread is built on a clean **MVC architecture** optimized for lightweight mobile performance and cloud-native scalability.
 
-
 <p align="center">
-  <img src="./screenshots/system-architecture.png" width="900">
+  <img src="./screenshots/SystemArchitecture.png" width="900">
 </p>
 
 ## 🗂️ Project Structure
@@ -208,15 +207,28 @@ We welcome contributions — especially from developers who understand rural Ind
 
 Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting.
 
+## 🛍️ Marketplace
+
+<p align="center">
+  <img src="./screenshots/marketplace.png" width="900">
+</p>
+
+## 👨‍🌾 Shepherd Dashboard
+
+<p align="center">
+  <img src="./screenshots/shepherd.png" width="900">
+</p>
+
+## 📦 Order Tracking
+
+<p align="center">
+  <img src="./screenshots/tracking.png" width="900">
+</p>
 ---
 
 ## 📸 Screenshots
 
-> *(Add screenshots here once UI is finalized)*
 
-| Shepherd Dashboard | Marketplace | Wool Tracking |
-|---|---|---|
-| `screenshots/shepherd.png` | `screenshots/marketplace.png` | `screenshots/tracking.png` |
 
 ---
 
