@@ -46,47 +46,14 @@ India is the **4th largest wool producer** in the world — yet most shepherds s
 
 ---
 
-## 🛠️ System Architecture
 
+## 🏗️ System Architecture
 Dhaga.Thread is built on a clean **MVC architecture** optimized for lightweight mobile performance and cloud-native scalability.
 
-```mermaid
-graph TD
-  classDef client fill:#FAFAF8,stroke:#C5A880,stroke-width:2px,color:#2B2B2A;
-  classDef server fill:#FAFAF8,stroke:#4E5D4C,stroke-width:2px,color:#2B2B2A;
-  classDef db fill:#FAFAF8,stroke:#9C3D37,stroke-width:2px,color:#2B2B2A;
 
-  subgraph Client ["Client Interface (Mobile-First EJS)"]
-    A["Mobile Viewport — Bootstrap 5 + Splide.js"]:::client
-    B["Ivory & Gold Design System — serif.css"]:::client
-    C["Dynamic Elements — Roadmap Stepper, Filters"]:::client
-  end
-
-  subgraph Server ["Express.js App Engine (Node.js)"]
-    D["Router Controller — routes/index.js"]:::server
-    E["Dynamic Page Renderer — EJS View Engine"]:::server
-    F["Supabase Client Wrapper — src/db/supabase.js"]:::server
-    G["Auth Middleware — Session + Role Guard"]:::server
-  end
-
-  subgraph Cloud ["Supabase Backend-as-a-Service"]
-    H["Auth Services — JWT + Row Level Security"]:::db
-    I["PostgreSQL Database — profiles, wool_batches, listings, meetings"]:::db
-    J["Storage — Wool batch images, QA certificates"]:::db
-  end
-
-  A --> D
-  B --> D
-  C --> D
-  D --> E
-  D --> F
-  D --> G
-  F --> H
-  F --> I
-  F --> J
-```
-
----
+<p align="center">
+  <img src="./screenshots/system-architecture.png" width="900">
+</p>
 
 ## 🗂️ Project Structure
 
