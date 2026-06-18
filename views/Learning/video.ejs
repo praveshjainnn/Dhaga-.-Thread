@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Video Lessons' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="s-loader-content">
+      <div class="s-loader-spinner"></div>
+      <h3 class="s-loader-brand">Dhaga<em>.Thread</em> 🧶</h3>
+      <div class="s-loader-text">Loading video gallery...</div>
+    </div>
+  </div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: true }) %>
+
+  <!-- Style Overrides -->
+  <style>
+    .s-module-pill {
+      background: var(--s-card);
+      border: 1px solid var(--s-border);
+      color: var(--s-fg);
+      font-family: var(--s-font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+      white-space: nowrap;
+    }
+    .s-module-pill:hover, .s-module-pill.active {
+      background: var(--s-accent);
+      border-color: var(--s-accent);
+      color: var(--s-accent-fg);
+      box-shadow: var(--s-shadow-sm);
+    }
+    
+    .s-video-card {
+      background: var(--s-card);
+      border: 1px solid var(--s-border);
+      border-radius: var(--s-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--s-shadow-sm);
+      margin-bottom: 24px;
+      transition: all 0.25s ease-out;
+    }
+    .s-video-card:hover {
+      border-color: var(--s-accent);
+      box-shadow: var(--s-shadow-md);
+    }
+    .s-video-wrapper {
+      position: relative;
+      background: #000;
+      aspect-ratio: 16/9;
+      width: 100%;
+    }
+    .s-video-wrapper video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .s-video-body {
+      padding: 14px;
+    }
+    .s-video-tag {
+      font-family: var(--s-font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--s-accent);
+      margin-bottom: 4px;
+      display: block;
+    }
+  </style>
+
+  <!-- Main Content Page Area -->
+  <main id="appCapsule" class="s-page" style="padding-top: 60px; padding-bottom: 80px;">
+
+    <!-- Heading -->
+    <div class="s-section-heading px-3 mb-2">
+      <h3>Video Lessons</h3>
+      <p style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); margin: 0 0 6px;">Watch instructional guides and lectures hosted by veteran shearers and breeding experts.</p>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Live Session Banner Promotion -->
+    <div class="section px-3 mb-3">
+      <div class="card p-3" style="background: rgba(184, 134, 11, 0.04); border: 1px solid rgba(184, 134, 11, 0.25); border-radius: var(--s-radius-lg);">
+        <div class="d-flex align-items-center gap-2 mb-2">
+          <span style="font-size: 1.3rem;">🎓</span>
+          <h5 class="mb-0" style="font-family: var(--s-font-serif); font-weight: 600; color: var(--s-accent);">1:1 Live Virtual Session</h5>
+        </div>
+        <p style="font-family: var(--s-font-sans); font-size: 0.82rem; color: var(--s-muted-fg); line-height: 1.4; margin-bottom: 12px;">
+          Need personalized advice on wool farming, health diagnostics, or shearing safety? Book a face-to-face video consultation session directly.
+        </p>
+        <a href="/Learning/meetPage" class="s-btn-primary py-2 px-3 text-center d-inline-block" style="min-height: auto; font-family: var(--s-font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; border-radius: var(--s-radius-sm);">Schedule Live Meet</a>
+      </div>
+    </div>
+
+    <!-- Module Selector Tabs -->
+    <div class="section mb-3 overflow-auto pb-2 px-3" style="display: flex; gap: 8px; -webkit-overflow-scrolling: touch;">
+      <button class="s-module-pill active" data-module="0" onclick="switchModule(0)">Module 1: Breeds</button>
+      <button class="s-module-pill" data-module="1" onclick="switchModule(1)">Module 2: Shear</button>
+      <button class="s-module-pill" data-module="2" onclick="switchModule(2)">Module 3: Quality</button>
+      <button class="s-module-pill" data-module="3" onclick="switchModule(3)">Module 4: Marketing</button>
+      <button class="s-module-pill" data-module="4" onclick="switchModule(4)">Module 5: Health</button>
+    </div>
+
+    <!-- Video Lists Container -->
+    <div class="section px-3" id="videoContainer">
+      <!-- Dynamic list based on selected module -->
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ========= JS Files =========  -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    const videosData = {
+      0: [
+        {
+          title: "Breeds & Genetics Overview (English)",
+          lang: "English Version",
+          desc: "A detailed breakdown of global sheep breeds (Merino, Alpaca, Vicuna) and how genetics determine staple diameter.",
+          src: "https://wezire.com/video/Sheep%20Breeds%20_%20A%20Woolly%20Tale%20eng2.mp4"
+        },
+        {
+          title: "Breeds & Genetics Overview (Hindi)",
+          lang: "Hindi Version",
+          desc: "Understand wool genetics, sheep breeds, and feed quality indexes translated in Hindi for local farmers.",
+          src: "https://wezire.com/video/hindi.mp4"
+        }
+      ],
+      1: [
+        {
+          title: "Introduction to Shearing Tools",
+          lang: "Standard Curriculum",
+          desc: "Understanding clipper maintenance, safety guards, and preparing your workspace before handling sheep.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        },
+        {
+          title: "Correct Blade Angles & Safety Guide",
+          lang: "Practical Demonstration",
+          desc: "Step-by-step closeups showing how to maneuver blades around sensitive areas with zero stress for the animal.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        }
+      ],
+      2: [
+        {
+          title: "Micron Count Analysis",
+          lang: "Lab Diagnostics",
+          desc: "How wool diameter is evaluated using simple visual scales and laboratory diffraction tests.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        },
+        {
+          title: "Staple Strength Evaluation",
+          lang: "Quality Control",
+          desc: "Testing fiber strength and elasticity by hand to classify fleece batches for spinners.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        }
+      ],
+      3: [
+        {
+          title: "Price Indices Tracking & MSP",
+          lang: "Farming Commerce",
+          desc: "Learn to read current market pricing indices, calculate taxes, and find certified buyers.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        }
+      ],
+      4: [
+        {
+          title: "Routine Vaccination Schedules",
+          lang: "Flock Health",
+          desc: "Biosecurity steps, deworming rotations, and keeping flock records in check.",
+          src: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+        }
+      ]
+    };
+
+    function renderModuleVideos(modId) {
+      const container = document.getElementById('videoContainer');
+      container.innerHTML = "";
+
+      const videosList = videosData[modId] || [];
+      if (videosList.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-4">
+            <span style="font-size: 2rem;">📭</span>
+            <p style="font-family: var(--s-font-sans); color: var(--s-muted-fg); margin-top: 8px;">No video lessons available for this module yet.</p>
+          </div>
+        `;
+        return;
+      }
+
+      videosList.forEach(video => {
+        const card = document.createElement('div');
+        card.className = "s-video-card";
+        card.innerHTML = `
+          <div class="s-video-wrapper">
+            <video controls preload="metadata">
+              <source src="${video.src}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <div class="s-video-body">
+            <span class="s-video-tag">${video.lang}</span>
+            <h4 style="font-family: var(--s-font-serif); font-weight: 600; color: var(--s-fg); font-size: 1.05rem; margin-bottom: 6px;">${video.title}</h4>
+            <p style="font-family: var(--s-font-sans); font-size: 0.82rem; color: var(--s-muted-fg); line-height: 1.4; margin-bottom: 0;">${video.desc}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function switchModule(modId) {
+      // Update pills active styling
+      document.querySelectorAll('.s-module-pill').forEach(pill => {
+        pill.classList.remove('active');
+        if (parseInt(pill.getAttribute('data-module')) === modId) {
+          pill.classList.add('active');
+        }
+      });
+
+      renderModuleVideos(modId);
+    }
+
+    // Initialize module based on URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialMod = parseInt(urlParams.get('module')) || 0;
+    switchModule(initialMod);
+  </script>
+</body>
+</html>

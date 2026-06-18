@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'KnitKraft — Service Dashboard' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page" style="padding-bottom: 90px;">
+
+    <!-- Wallet Balance Card -->
+    <div class="s-balance-card">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <div>
+          <div class="s-balance-eyebrow">Earned Yet</div>
+          <div class="s-balance-amount">₹25,612.50</div>
+        </div>
+        <div style="font-size: 2.2rem; opacity: 0.85;">🔧</div>
+      </div>
+
+      <hr class="s-balance-rule"/>
+
+      <!-- Action Row -->
+      <div class="s-action-row">
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-down-outline"></ion-icon>
+          </div>
+          <span>Withdraw</span>
+        </a>
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#sendActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </div>
+          <span>Send</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="s-stats-grid">
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📈 Income</div>
+        <div class="s-stat-val green">₹552.95</div>
+      </div>
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📉 Expenses</div>
+        <div class="s-stat-val gold">₹86.45</div>
+      </div>
+    </div>
+
+    <!-- Service Requests Section -->
+    <div class="s-section-heading d-flex justify-content-between align-items-center mb-3">
+      <div style="flex: 1;">
+        <h3 style="margin: 0;">Service Orders</h3>
+        <span class="s-rule-accent"></span>
+      </div>
+
+      <!-- Filters -->
+      <div class="btn-group btn-group-sm" role="group" style="font-family: var(--s-font-mono);">
+        <input type="radio" class="btn-check" name="status" id="pending" autocomplete="off" checked onclick="fillserviceBookings()"/>
+        <label class="btn btn-outline-secondary py-1 px-3" for="pending" style="min-height: auto; font-size: 0.7rem;">Pending</label>
+
+        <input type="radio" class="btn-check" name="status" id="accepted" autocomplete="off" onclick="fillserviceBookings()"/>
+        <label class="btn btn-outline-secondary py-1 px-3" for="accepted" style="min-height: auto; font-size: 0.7rem;">Accepted</label>
+      </div>
+    </div>
+
+    <!-- Service Bookings List -->
+    <div id="serviceBookings" style="margin-bottom: 24px;">
+      <!-- Dynamic list -->
+    </div>
+
+    <!-- Dialog Modal Show Trigger (hidden) -->
+    <a data-bs-toggle="modal" data-bs-target="#DialogForm" id="modelShow" style="display: none;"></a>
+
+    <!-- Grade & Quality Assessment Form Modal -->
+    <div class="modal fade" id="DialogForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Wool Quality Grading</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form id="requestserviceForm">
+              
+              <div class="s-field">
+                <label for="fleecetype">Fleece Breed</label>
+                <select id="fleecetype" name="fleeceType">
+                  <option value="">Select Fleece Breed...</option>
+                  <option value="Merino">Merino</option>
+                  <option value="Cashmere">Cashmere</option>
+                  <option value="Marwari">Marwari</option>
+                  <option value="Nali">Nali</option>
+                  <option value="Lohi">Lohi</option>
+                  <option value="Angora">Angora</option>
+                  <option value="Camel">Camel</option>
+                </select>
+              </div>
+
+              <div class="s-field">
+                <label for="fiberlength">Fiber Length (inches)</label>
+                <input type="number" id="fiberlength" name="fiberLength" placeholder="e.g. 3.5"/>
+              </div>
+
+              <div class="s-field">
+                <label for="staplelength">Staple Length (inches)</label>
+                <input type="number" id="staplelength" name="stapleLength" placeholder="e.g. 4.0"/>
+              </div>
+
+              <div class="s-field">
+                <label for="fiberfineness">Fiber Fineness (micron)</label>
+                <input type="number" id="fiberfineness" name="fiberFineness" placeholder="e.g. 21.5"/>
+              </div>
+
+              <!-- Moisture Content -->
+              <div style="margin-bottom: 20px;">
+                <div style="font-family: var(--s-font-mono); font-size: 0.65rem; text-transform: uppercase; color: var(--s-muted-fg); margin-bottom: 6px;">Moisture Quality Parameters</div>
+                <div class="row g-2">
+                  <div class="col-4">
+                    <label class="s-label" style="font-size: 0.58rem; margin:0;" for="undried">Dry specimen (g)</label>
+                    <input type="number" id="undried" name="massOfDrySpecimen" style="min-height:36px; padding: 6px; font-size: 0.9rem;"/>
+                  </div>
+                  <div class="col-4">
+                    <label class="s-label" style="font-size: 0.58rem; margin:0;" for="dry">Undried specimen (g)</label>
+                    <input type="number" id="dry" name="massOfUndriedSpecimen" style="min-height:36px; padding: 6px; font-size: 0.9rem;"/>
+                  </div>
+                  <div class="col-4">
+                    <label class="s-label" style="font-size: 0.58rem; margin:0;" for="absorbed">Absorbed (g)</label>
+                    <input type="number" id="absorbed" name="massOfAbsorbedSpecimen" style="min-height:36px; padding: 6px; font-size: 0.9rem;"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="s-field">
+                <label for="fiberdiameter">Fiber Diameter (mm)</label>
+                <input type="number" id="fiberdiameter" name="fiberDiameter" placeholder="e.g. 0.025"/>
+              </div>
+
+              <div class="s-field">
+                <label for="burr">Burr Content (%)</label>
+                <input type="number" id="burr" name="burrContent" placeholder="e.g. 1.2"/>
+              </div>
+
+              <div class="s-field">
+                <label for="colour">Colour grade</label>
+                <select id="colour" name="color">
+                  <option value="">Select Colour...</option>
+                  <option value="White">White (ALB)</option>
+                  <option value="Light Yellow">Light Yellow (LY)</option>
+                  <option value="Medium Yellow">Medium Yellow (MY)</option>
+                  <option value="Heavy Yellow">Heavy Yellow (HY)</option>
+                  <option value="Brown">Brown</option>
+                  <option value="Black">Black</option>
+                </select>
+              </div>
+
+              <div class="d-flex gap-2 mt-3">
+                <button type="button" class="s-btn-primary flex-fill m-0" onclick="updateBatch()">Generate Grade</button>
+                <button type="button" class="s-btn-outline flex-fill m-0" data-bs-dismiss="modal" style="color: var(--s-accent); border-color: var(--s-accent);">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Action Sheet -->
+    <div class="modal fade" id="withdrawActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Withdraw Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="s-field">
+                <label for="account2d">From Account</label>
+                <select id="account2d">
+                  <option value="0">Savings (*** 5019)</option>
+                  <option value="1">Investment (*** 6212)</option>
+                </select>
+              </div>
+              <div class="s-field">
+                <label for="withdrawAmount">Amount (₹)</label>
+                <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" value="100"/>
+              </div>
+              <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Withdraw</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Send Action Sheet -->
+    <div class="modal fade" id="sendActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Send Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="s-field">
+                <label for="account2">From Account</label>
+                <select id="account2">
+                  <option value="0">Savings (*** 5019)</option>
+                  <option value="1">Investment (*** 6212)</option>
+                </select>
+              </div>
+              <div class="s-field">
+                <label for="sendTo">Recipient UPI ID</label>
+                <input type="text" id="sendTo" placeholder="Enter UPI ID"/>
+              </div>
+              <div class="s-field">
+                <label for="sendAmount">Amount (₹)</label>
+                <input type="number" id="sendAmount" placeholder="Enter amount" value="100"/>
+              </div>
+              <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Transfer</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- Custom Bottom Menu Style for Service Dashboard -->
+  <style>
+    .appBottomMenu {
+      display: none !important;
+    }
+    .serviceBottomMenu {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 60px;
+      background: var(--s-bg);
+      border-top: 1px solid var(--s-border);
+      box-shadow: 0 -1px 0 var(--s-border), var(--s-shadow-sm);
+      z-index: 99;
+    }
+    .serviceBottomMenu .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-decoration: none;
+      color: var(--s-muted-fg);
+      font-family: var(--s-font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      transition: all 0.2s ease-out;
+    }
+    .serviceBottomMenu .item.active, .serviceBottomMenu .item:hover {
+      color: var(--s-accent);
+    }
+    .serviceBottomMenu .item ion-icon {
+      font-size: 1.3rem;
+    }
+  </style>
+
+  <div class="serviceBottomMenu">
+    <a href="/service" class="item active">
+      <ion-icon name="pie-chart-outline"></ion-icon>
+      <strong>Overview</strong>
+    </a>
+    <a href="/service/trackProduction" class="item">
+      <ion-icon name="pulse-outline"></ion-icon>
+      <strong>Track Production</strong>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    var ALL_service_BOOKINGS = [];
+
+    // Load bookings (with mock fallback)
+    $.getJSON("/api/getServiceBookings", function (data) {
+      if (data.status === "success") {
+        ALL_service_BOOKINGS = data.service;
+        fillserviceBookings();
+      }
+    }).fail(function() {
+      // Mock data
+      var mockData = [
+        {
+          _id: "s01",
+          farmerId: "f01",
+          name: "Mohan Lal",
+          serviceType: "Shearing & Grading",
+          serviceDate: "2026-06-20",
+          message: "Requesting quality check for merino lot.",
+          batchNo: "Batch 1",
+          status: "pending",
+          response: ""
+        },
+        {
+          _id: "s02",
+          farmerId: "f02",
+          name: "Suraj Bhan",
+          serviceType: "Veterinary Checkup",
+          serviceDate: "2026-06-16",
+          message: "Standard health review.",
+          batchNo: "Batch 2",
+          status: "accepted",
+          response: "Confirmed vet arrival."
+        }
+      ];
+      ALL_service_BOOKINGS = mockData;
+      fillserviceBookings();
+    });
+
+    function fillserviceBookings() {
+      var selectedStatus = document.querySelector('input[name="status"]:checked').id;
+      var containerHtml = "";
+
+      var filtered = ALL_service_BOOKINGS.filter(function(b) {
+        return b.status.toLowerCase() === selectedStatus;
+      });
+
+      if (filtered.length === 0) {
+        containerHtml = `
+          <div class="card p-3 text-center" style="font-family: var(--s-font-sans); color: var(--s-muted-fg);">
+            No ${selectedStatus} service orders found.
+          </div>
+        `;
+      } else {
+        filtered.forEach(function (service) {
+          containerHtml += `
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title" style="margin: 0; font-size: 1.1rem;">${service.name}</h5>
+                  <span class="badge ${service.status === 'accepted' ? 'badge-success' : 'badge-warning'}" style="font-family: var(--s-font-mono); font-size: 0.6rem; text-transform: uppercase;">${service.status}</span>
+                </div>
+                <h6 style="font-family: var(--s-font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg); margin-bottom: 12px;">Service: ${service.serviceType}</h6>
+                
+                <div style="font-size: 0.88rem; color: var(--s-fg); margin-bottom: 12px;">
+                  <div><strong>Date:</strong> ${service.serviceDate}</div>
+                  <div><strong>Batch:</strong> ${service.batchNo}</div>
+                  <div><strong>Notes:</strong> "${service.message}"</div>
+                </div>
+
+                <div class="s-field">
+                  <label for="resp-${service._id}">Response notes</label>
+                  <input type="text" id="resp-${service._id}" class="form-control" value="${service.response || ''}" placeholder="Type proposal or confirmation..."/>
+                </div>
+
+                <div class="d-flex gap-2">
+                  ${service.status === 'accepted' ? `
+                    <button onclick="document.getElementById('modelShow').click(); window.farmerId='${service.farmerId}'; window.batchNo='${service.batchNo}'" class="s-btn-primary flex-fill py-1" style="min-height:36px; margin: 0; font-size: 0.85rem; background: #2D6A4F; border-color: #2D6A4F;">Grade Batch</button>
+                  ` : ''}
+                  <button onclick="updateServiceStatus('${service._id}', 'accepted', document.getElementById('resp-${service._id}').value)" class="s-btn-primary flex-fill py-1" style="min-height:36px; margin: 0; font-size: 0.85rem;">Approve</button>
+                  <button onclick="updateServiceStatus('${service._id}', 'pending', document.getElementById('resp-${service._id}').value)" class="s-btn-outline flex-fill py-1" style="min-height:36px; margin: 0; font-size: 0.85rem; color: var(--s-accent); border-color: var(--s-accent);">Reject</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      $("#serviceBookings").html(containerHtml);
+    }
+
+    function updateServiceStatus(id, status, response) {
+      $.post("/api/updateServiceStatus", { id, status, response }, function (data) {
+        window.location.reload();
+      }).fail(function() {
+        var index = ALL_service_BOOKINGS.findIndex(function(b) { return b._id === id; });
+        if (index !== -1) {
+          ALL_service_BOOKINGS[index].status = status;
+          ALL_service_BOOKINGS[index].response = response;
+          fillserviceBookings();
+        }
+      });
+    }
+
+    function updateBatch() {
+      // Mock finishing action
+      alert("Wool quality grading completed successfully. Certificate generated.");
+      window.location.reload();
+    }
+  </script>
+</body>
+</html>

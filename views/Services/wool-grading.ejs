@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="theme-color" content="#000000" />
+    <title>KnitKraft</title>
+    <meta name="description" content="KnitKraft HTML Mobile Template" />
+    <meta name="keywords"
+        content="bootstrap, wallet, banking, fintech mobile template, cordova, phonegap, mobile, html, responsive" />
+    <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="32x32" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/img/icon/192x192.png" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/serif.css" />
+    <link rel="manifest" href="/__manifest.json" />
+</head>
+
+<body>
+    <!-- loader -->
+    <div id="loader">
+      <div class="s-loader-content">
+        <div class="s-loader-spinner"></div>
+        <h3 class="s-loader-brand">Knit<em>Kraft</em> 🧶</h3>
+        <div class="s-loader-text">Loading wool grading...</div>
+      </div>
+    </div>
+    <!-- * loader -->
+
+    <!-- Shared Header -->
+    <%- include('../partials/serif-header', { showBack: true }) %>
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="s-page" style="padding-top: 60px; padding-bottom: 80px;">
+        <div class="section mt-3">
+            <div class="card" style="max-height: auto;">
+                <div class="card-body">
+                    <ul class="nav nav-tabs capsuled" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" onclick="stopCamera()" data-bs-toggle="tab" href="#request"
+                                role="tab">
+                                Request
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="openCamera()" data-bs-toggle="tab" href="#scan" role="tab">
+                                Scan
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="stopCamera()" data-bs-toggle="tab" href="#self" role="tab">
+                                Self
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content mt-1">
+                        <!-- add request -->
+                        <div class="tab-pane fade show active" id="request" role="tabpanel">
+                            <div class="section mt-2">
+                                <a href="#" class="btn btn-primary btn-block"
+                                    style="background-color: var(--s-gold); border-color: var(--s-gold); color: #000; font-weight: 600;"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#addCardActionSheet">
+                                    <ion-icon name="color-filter-outline"></ion-icon>
+                                    Request Grading Service
+                                </a>
+                            </div>
+                            <div class="container mt-2">
+                                <div class="grading-system">
+                                    <p>Wool grading in India involves several well-recognized systems, each emphasizing specific criteria to evaluate the quality of wool. The prominent grading systems include:</p>
+                                  <h2>Indian Grades</h2>
+                                  <p>
+                                    This system categorizes wool based on established quality standards set within the Indian wool industry.
+                                  </p>
+                                  <ul class="criteria-list">
+                                    <li>Fiber Fineness</li>
+                                    <li>Length</li>
+                                    <li>Other Characteristics</li>
+                                  </ul>
+                                </div>
+                            
+                                <div class="grading-system">
+                                  <h2>Indian Standard Institute (BIS)</h2>
+                                  <p>
+                                    BIS, the national standard body of India, contributes to wool grading by defining and ensuring adherence to quality standards.
+                                  </p>
+                                  <ul class="criteria-list">
+                                    <li>Fiber Fineness</li>
+                                    <li>Length</li>
+                                    <li>Cleanliness</li>
+                                  </ul>
+                                </div>
+                            
+                                <div class="grading-system">
+                                  <h2>FAO (Food and Agriculture Organization)</h2>
+                                  <p>
+                                    The FAO system, affiliated with the United Nations, plays a role in setting international standards for wool grading.
+                                  </p>
+                                  <ul class="criteria-list">
+                                    <li>Fiber Fineness</li>
+                                    <li>Length</li>
+                                    <li>Other Quality Attributes</li>
+                                  </ul>
+                                </div>
+                            
+                                <div class="grading-system">
+                                  <h2>American Blood System</h2>
+                                  <p>
+                                    This system, often used as a reference, focuses on the genetic and bloodline aspects of wool-producing animals.
+                                  </p>
+                                  <ul class="criteria-list">
+                                    <li>Genetic Traits</li>
+                                    <li>Bloodline</li>
+                                  </ul>
+                                </div>
+                            
+                                <div class="criteria">
+                                  <h2>Key Parameters</h2>
+                                  <ul class="criteria-list">
+                                    <li>Fiber Fineness</li>
+                                    <li>Length</li>
+                                    <li>Burr Content</li>
+                                    <li>Color</li>
+                                    <li>Cleanliness</li>
+                                  </ul>
+                                </div>
+                              </div>
+
+                            <div class="mt-1"></div>
+                        </div>
+                        <!-- add scan -->
+                        <div class="tab-pane fade" id="scan" role="tabpanel">
+                            <button onclick="captureImage()">Capture</button>
+                            <video id="videoElement" autoplay></video>
+                            <script>
+                                let videoStream = null;
+
+                                function openCamera() {
+                                    // Check if the user is on a mobile device
+                                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                                    startCamera();
+                                    return;
+                                    // Request camera permission explicitly on mobile devices
+                                    if (isMobile) {
+
+                                        navigator.permissions.query({ name: 'camera' })
+                                            .then(permissionStatus => {
+                                                if (permissionStatus.state === 'granted') {
+                                                    startCamera();
+                                                } else {
+                                                    console.error('Camera permission not granted.');
+                                                }
+                                            })
+                                            .catch(err => {
+                                                console.error('Error checking camera permission:', err);
+                                            });
+                                    } else {
+                                        // For non-mobile devices, proceed with opening the camera
+                                        startCamera();
+                                    }
+                                }
+
+                                function startCamera() {
+                                    // take camera permission
+
+                                    navigator.mediaDevices.getUserMedia({ video: true })
+                                        .then(function (stream) {
+                                            const videoElement = document.getElementById('videoElement');
+                                            videoElement.srcObject = stream;
+                                            videoStream = stream;
+                                        })
+                                        .catch(function (err) {
+                                            console.error('Error accessing the camera: ', err);
+                                        });
+                                }
+
+                                function stopCamera() {
+                                    if (videoStream) {
+                                        videoStream.getTracks().forEach(track => track.stop());
+                                        const videoElement = document.getElementById('videoElement');
+                                        videoElement.srcObject = null;
+                                        videoStream = null;
+                                    }
+                                }
+
+                                function captureImage() {
+                                    const video = document.getElementById('videoElement');
+                                    const canvas = document.createElement('canvas');
+                                    canvas.width = video.videoWidth;
+                                    canvas.height = video.videoHeight;
+                                    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                                    // Convert the canvas image to a data URL
+                                    const capturedImage = canvas.toDataURL('image/png');
+
+                                    // Do something with the captured image (e.g., display it, upload it, etc.)
+                                    // For example, you can create an img element and set its src to capturedImage
+                                    const capturedImageElement = document.createElement('img');
+                                    capturedImageElement.src = capturedImage;
+                                    document.body.appendChild(capturedImageElement);
+                                }
+
+                            </script>
+                        </div>
+                        <div class="tab-pane fade" id="self" role="tabpanel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content" style="height: auto">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">KnitKraft Self Certification</h5>
+                                    </div>
+
+
+                                    <!-- FILEPATH: /E:/SIH/SIH_2023/frontend/index.html -->
+                                    <!-- BEGIN: ed8c6549bwf9 -->
+                                    <div class="modal-body">
+                                        <div class="action-sheet-content text-center" style="max-height: 68vh">
+
+                                            <div id="carouselExampleIndicators1" class="carousel slide"
+                                                data-interval="false">
+                                                <div class="carousel-inner">
+                                                    <div class="carousel-item active">
+                                                        <div>
+
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                1.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <!-- <h4>Type of Fleece : </h4> -->
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="fleecetype">Type of Fleece :
+                                                                </label>
+                                                                <select class="form-control custom-select"
+                                                                    id="fleecetype">
+                                                                    <option>Select Fleece</option>
+                                                                    <option value="Lohi">Lohi</option>
+                                                                    <option value="Rampur">Rampur</option>
+                                                                    <option value="Nali">Nali</option>
+                                                                    <option value="Bakharwal">Bakharwal</option>
+                                                                    <option value="Marwari">Marwari</option>
+                                                                    <option value="Patanwadi">Patanwadi</option>
+                                                                    <option value="Cashmere">Cashmere</option>
+                                                                    <option value="Alpaca">Alpaca</option>
+                                                                    <option value="Angora">Angora</option>
+                                                                    <option value="Mohair">Mohair</option>
+                                                                    <option value="Merino">Merino</option>
+                                                                    <option value="Camel">Camel</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div style="display: flex; justify-content: space-around;">
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                2.
+                                                            </div>
+                                                            <a href="#" class="btn btn-primary btn-secondary"
+                                                                data-bs-toggle="modal"
+                                                                data-bs-target="#DialogIconedSuccess">
+                                                                <!-- question  mark icon -->
+                                                                <ion-icon name="help-circle-outline"></ion-icon>
+                                                            </a>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="lengthassessment">Length
+                                                                    Assessment</label>
+                                                                <h4>Fiber Length : </h4>
+                                                                <input type="number" class="form-control"
+                                                                    id="fiberlength"
+                                                                    placeholder="Enter Fiber Length in inches">
+                                                                <br>
+                                                                <h4>Staple Length : </h4>
+                                                                <input type="number" class="form-control"
+                                                                    id="staplelength"
+                                                                    placeholder="Enter Staple Length in inches">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div>
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                3.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="fineness">Fiber Fineness :</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="fiberfineness"
+                                                                    placeholder="Enter Fiber Fineness in micrometer">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div>
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                4.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="fineness">Moisure Content</label>
+                                                                <h4>A: Mass of dry specimen :</h4>
+                                                                <input type="number" class="form-control"
+                                                                    id="undried"
+                                                                    placeholder="">
+                                                                    <br>
+                                                                <h4>B: Mass of undried specimen :</h4>
+                                                                <input type="number" class="form-control"
+                                                                    id="dry"
+                                                                    placeholder="">
+                                                                    <br>
+                                                                <h4>C: Mass of absorbed specimen :</h4>
+                                                                <input type="number" class="form-control"
+                                                                    id="absorbed"
+                                                                    placeholder="">
+                                                                    <br>
+                                                                <label class="label" for="regain">Moisure Regain % : </label>
+                                                                <label class="label" for="content">Moisure Content % : </label>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div>
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                5.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="fineness">Fiber Diameter :</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="fiberdiameter"
+                                                                    placeholder="Enter Fiber Diameter in mm">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div>
+                                                            <div type="button" class="btn btn-primary btn-secondary"  id="finalbutton">
+                                                                6.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="fineness">Burr Content :</label>
+                                                                <input type="number" class="form-control"
+                                                                    id="burr"
+                                                                    placeholder="Enter Burr Content %">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="carousel-item">
+                                                        <div>
+                                                            <div type="button" class="btn btn-primary btn-secondary">
+                                                                7.
+                                                            </div>
+                                                        </div>
+                                                        <br>
+                                                        <div class="form-group boxed">
+                                                            <div class="input-wrapper">
+                                                                <label class="label" for="colour">Colour of Fleece :
+                                                                </label>
+                                                                <select class="form-control custom-select"
+                                                                    id="colour">
+                                                                    <option>Select Colour</option>
+                                                                    <option value="alb">White (ALB)</option>
+                                                                    <option value="ly">Light Yellow (LY)</option>
+                                                                    <option value="my">Medium Yellow (MY)</option>
+                                                                    <option value="hy">Heavy Yellow (HY)</option>
+                                                                    <option value="black">Black</option>
+                                                                    <option value="brown">Brown</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                    
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-2">
+                                            <button class="btn btn-primary me-1" id="carouselPrevButton1">Previous</button>
+                                            <button class="btn btn-primary  me-1" id="carouselNextButton1">Next</button>
+
+                                        </div>
+                                        </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                            
+                            
+                            
+                                <!-- DialogIconedSuccess -->
+                                <div class="modal dialogbox" id="DialogIconedSuccess" data-bs-backdrop="static" tabindex="-1" role="dialog" style="text-align: justify !important;">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-body" style="text-align: left !important;">
+                                                <p class="mt-2"><strong>What?</strong></p>
+                                                <p>Fibre length is the length of the fiber in the straightened condition.</p>
+                                                <br>
+                                                <p><strong>How to measure?</strong></p>
+                                                <ul>
+                                                    <li>Take a ruler place one end of the wool fiber on one end and stretch it till its maximum length as shown in the image.</li>
+                                                    <li>Record the value.</li>
+                                                </ul>
+                                                <img src="../assets/img/scale.jpeg" alt="image" class="img-fluid">
+                                            </div>
+                                            
+                                              
+                                                <div class="modal-footer">
+                                                    <div class="btn-inline">
+                                                        <a href="#" class="btn" data-bs-dismiss="modal">CLOSE</a>
+                                                    </div>
+                                                </div>
+                                          
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- END: ed8c6549bwf9 -->
+
+                            <script>
+                                document.getElementById('carouselPrevButton1').addEventListener('click', function () {
+                                    var carousel = document.getElementById('carouselExampleIndicators1');
+                                    var activeItem = carousel.querySelector('.carousel-item.active');
+                                    var prevItem = activeItem.previousElementSibling;
+
+                                    if (prevItem) {
+                                        prevItem.classList.add('active');
+                                        activeItem.classList.remove('active');
+                                    } else {
+                                        // If at the first item, you might want to handle this case accordingly.
+                                    }
+                                });
+                                document.getElementById('carouselNextButton1').addEventListener('click', function () {
+                                    var carousel = document.getElementById('carouselExampleIndicators1');
+                                    var activeItem = carousel.querySelector('.carousel-item.active');
+                                    var nextItem = activeItem.nextElementSibling;
+
+                                    if (nextItem) {
+                                        nextItem.classList.add('active');
+                                        activeItem.classList.remove('active');
+                                    }
+
+                                    else {
+                                        // Redirect to some page when the last carousel item is reached
+                                        window.location.href = '/index.html';
+                                    }
+                                });
+                            </script>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Shared Bottom Navigation -->
+    <%- include('../partials/serif-nav') %>
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="/assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="/assets/js/base.js"></script>
+</body>
+
+</html>

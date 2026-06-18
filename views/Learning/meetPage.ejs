@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Live Sessions' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="s-loader-content">
+      <div class="s-loader-spinner"></div>
+      <h3 class="s-loader-brand">Dhaga<em>.Thread</em> 🧶</h3>
+      <div class="s-loader-text">Loading virtual meetings...</div>
+    </div>
+  </div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: true }) %>
+
+  <!-- Style Overrides -->
+  <style>
+    .s-meet-card {
+      background: var(--s-card);
+      border: 1px solid var(--s-border);
+      border-radius: var(--s-radius-lg);
+      box-shadow: var(--s-shadow-sm);
+      margin-bottom: 16px;
+      transition: all 0.25s ease-out;
+    }
+    .s-meet-card:hover {
+      border-color: var(--s-accent);
+      box-shadow: var(--s-shadow-md);
+    }
+    .s-status-badge {
+      display: inline-block;
+      font-family: var(--s-font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 500;
+    }
+    .s-status-pending {
+      background: rgba(184, 134, 11, 0.08);
+      color: var(--s-accent);
+      border: 1px solid rgba(184, 134, 11, 0.2);
+    }
+    .s-status-approved {
+      background: rgba(45, 106, 79, 0.08);
+      color: #2D6A4F;
+      border: 1px solid rgba(45, 106, 79, 0.2);
+    }
+  </style>
+
+  <!-- App Capsule -->
+  <main id="appCapsule" class="s-page" style="padding-top: 60px; padding-bottom: 80px;">
+
+    <!-- Join Meet Box -->
+    <div class="section px-3 mt-3">
+      <div class="card p-3 mb-4">
+        <h4 style="font-family: var(--s-font-serif); font-weight: 600; color: var(--s-fg); font-size: 1.2rem; margin-bottom: 8px;">Join Live Room</h4>
+        <p style="font-family: var(--s-font-sans); font-size: 0.84rem; color: var(--s-muted-fg); line-height: 1.4; margin-bottom: 14px;">
+          Enter the room key or class code provided by your educator to launch your secure video classroom.
+        </p>
+        
+        <div class="s-field mb-3">
+          <input type="text" id="linkBox" placeholder="e.g. KnitKraftClassroom101" style="font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: 0.05em;" />
+        </div>
+        
+        <div class="row g-2">
+          <div class="col-6">
+            <button class="s-btn-primary w-100 py-2" id="joinBtn" style="min-height: auto; font-family: var(--s-font-mono); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
+              Join Classroom
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="btn btn-outline-secondary w-100 py-2" id="requestBtn" data-bs-toggle="modal" data-bs-target="#requestModal" style="border-radius: var(--s-radius-sm); font-family: var(--s-font-mono); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;">
+              Book 1:1 Session
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scheduled Meetings Section -->
+    <div class="section px-3">
+      <div class="s-section-heading mb-3">
+        <h3>Scheduled Sessions</h3>
+        <span class="s-rule-accent"></span>
+      </div>
+      
+      <!-- List populated dynamically -->
+      <div id="allMeetings">
+        <div class="text-center py-4 text-muted" style="font-family: var(--s-font-sans); font-size: 0.88rem;">
+          <div class="spinner-border spinner-border-sm text-warning mb-2" role="status"></div>
+          <div>Loading scheduled classes...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal fade" id="requestModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 2px solid var(--s-accent);">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-family: var(--s-font-serif); font-weight: 600; color: var(--s-fg); font-size: 1.15rem;">Request 1:1 Session</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form id="bookMeetForm">
+              <input type="hidden" name="farmerId" value="43689564389" />
+
+              <div class="s-field">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name" required />
+              </div>
+
+              <div class="s-field">
+                <label for="topic">Session Topic</label>
+                <select id="topic" name="topic" required>
+                  <option value="" disabled selected>Select Topic</option>
+                  <option value="Farming">Farming & Nutrition</option>
+                  <option value="Sheep Breeding">Sheep Breeding & Genetics</option>
+                  <option value="Wool Processing">Wool Quality & Grading</option>
+                  <option value="Wool Marketing">Wool Marketing & Trade</option>
+                </select>
+              </div>
+
+              <div class="row g-2">
+                <div class="col-6">
+                  <div class="s-field">
+                    <label for="date">Select Date</label>
+                    <input type="date" id="date" name="date" value="2026-06-18" required />
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="s-field">
+                    <label for="time">Select Time</label>
+                    <input type="time" id="time" name="time" value="13:45" required />
+                  </div>
+                </div>
+              </div>
+
+              <div class="s-field">
+                <label for="message">Detailed Message</label>
+                <input type="text" id="message" name="message" placeholder="Provide extra details on your query..." required />
+              </div>
+
+              <div class="d-flex gap-2 mt-3">
+                <button type="button" class="btn btn-outline-secondary w-50" data-bs-dismiss="modal" style="border-radius: var(--s-radius-sm); font-family: var(--s-font-mono); font-size: 0.8rem; text-transform: uppercase;">Cancel</button>
+                <button type="submit" class="s-btn-primary w-50" style="min-height: auto; font-family: var(--s-font-mono); font-size: 0.8rem; text-transform: uppercase;">Book Session</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Dialog -->
+    <div class="modal fade dialogbox" id="DialogIconedDanger" data-bs-backdrop="static" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 4px solid #8B0000;">
+          <div class="modal-icon text-danger mt-3" style="font-size: 3rem;">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </div>
+          <div class="modal-header pt-1">
+            <h5 class="modal-title" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.25rem;">Error</h5>
+          </div>
+          <div class="modal-body" style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg);">
+            Something went wrong while executing the requested action. Please verify connectivity.
+          </div>
+          <div class="modal-footer pb-3 border-0">
+            <div class="btn-inline" style="justify-content: center; width: 100%;">
+              <button class="btn btn-secondary px-4 py-2" data-bs-dismiss="modal" style="min-height: auto;">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notification dialogs Success -->
+    <div id="SUCCESS-NOTIFICATION" class="notification-box">
+      <div class="notification-dialog android-style" style="background: var(--s-card); border-left: 4px solid #2D6A4F; box-shadow: var(--s-shadow-md);">
+        <div class="notification-header">
+          <a href="#" class="close-button" style="color: var(--s-fg);"><ion-icon name="close"></ion-icon></a>
+        </div>
+        <div class="notification-content p-0 d-flex align-items-center justify-content-between">
+          <div>
+            <h3 class="subtitle" style="font-family: var(--s-font-serif); font-weight: 600; color: #2D6A4F; font-size: 0.95rem; margin-bottom: 2px;">Session Scheduled</h3>
+            <div class="text" style="font-family: var(--s-font-sans); font-size: 0.8rem; color: var(--s-muted-fg);">Your virtual classroom session request has been submitted.</div>
+          </div>
+          <div class="icon-box text-success" style="font-size: 1.6rem;"><ion-icon name="checkmark-circle"></ion-icon></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Navigation -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ========= JS Files =========  -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    // Classroom Integration
+    const joinBtn = document.getElementById("joinBtn");
+    const linkBox = document.getElementById("linkBox");
+    const appCapsule = document.getElementById("appCapsule");
+
+    joinBtn.addEventListener("click", function() {
+      const roomVal = linkBox.value.trim();
+      if (!roomVal) {
+        alert("Please enter a meeting code!");
+        return;
+      }
+      
+      // Replace app capsule contents with dynamic Jitsi meet iframe
+      appCapsule.innerHTML = `
+        <div style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 10000; background: #000;">
+          <iframe width="100%" height="100%" style="border: none;" frameborder="0"
+            src="https://meet.jit.si/${encodeURIComponent(roomVal)}" allow="camera; microphone; fullscreen; display-capture"></iframe>
+          <button onclick="location.reload()" style="position: absolute; top: 12px; right: 12px; z-index: 10001; background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 0.8rem; cursor: pointer;">Exit Room</button>
+        </div>
+      `;
+    });
+
+    // Fetch and populate scheduled meetings
+    function loadMeetings() {
+      const container = $("#allMeetings");
+      $.getJSON("https://knitkraft.onrender.com/api/getMeetings", function (data) {
+        container.empty();
+        if (data.status === "success" && data.meetings && data.meetings.length > 0) {
+          let hasFarmerMeet = false;
+          
+          data.meetings.forEach(meet => {
+            if (meet.farmerId === "43689564389") {
+              hasFarmerMeet = true;
+              
+              const statusClass = (meet.status === "Pending" || meet.status === "reject") ? "s-status-pending" : "s-status-approved";
+              const meetHtml = `
+                <div class="card s-meet-card p-3 mb-3">
+                  <div class="d-flex justify-content-between align-items-start mb-2">
+                    <div>
+                      <span style="font-family: var(--s-font-mono); font-size: 0.65rem; color: var(--s-muted-fg); text-transform: uppercase;">Topic</span>
+                      <h4 class="mb-0" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.05rem; color: var(--s-fg);">${meet.topic}</h4>
+                    </div>
+                    <span class="s-status-badge ${statusClass}">${meet.status}</span>
+                  </div>
+
+                  <div class="row g-2 my-2 py-2 border-top border-bottom" style="font-family: var(--s-font-mono); font-size: 0.72rem; color: var(--s-muted-fg); text-transform: uppercase; letter-spacing: 0.02em;">
+                    <div class="col-6">📅 Date: <strong style="color: var(--s-fg);">${meet.date}</strong></div>
+                    <div class="col-6 text-end">🕒 Time: <strong style="color: var(--s-fg);">${meet.time}</strong></div>
+                  </div>
+
+                  <p style="font-family: var(--s-font-sans); font-size: 0.82rem; color: var(--s-muted-fg); line-height: 1.4; margin-bottom: 12px;">
+                    ${meet.message || "No detailed message provided."}
+                  </p>
+
+                  ${meet.response ? `
+                    <div class="p-2 mb-3 rounded" style="background: rgba(184, 134, 11, 0.03); border: 1px dashed var(--s-border);">
+                      <div style="font-family: var(--s-font-mono); font-size: 0.62rem; text-transform: uppercase; color: var(--s-accent);">Educator Response</div>
+                      <p class="mb-0" style="font-family: var(--s-font-sans); font-size: 0.8rem; color: var(--s-fg);">${meet.response}</p>
+                    </div>
+                  ` : ''}
+
+                  <div class="d-flex gap-2">
+                    ${meet.status !== "Pending" ? `
+                      <button onclick="launchClassroom('${meet.topic}')" class="s-btn-primary py-1 px-3 text-center flex-grow-1" style="min-height: auto; font-family: var(--s-font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--s-radius-sm);">Launch Class</button>
+                    ` : ''}
+                    <button onclick="deleteMeeting('${meet._id}')" class="btn btn-outline-danger btn-sm py-1 px-3" style="font-family: var(--s-font-mono); font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.05em; border-radius: var(--s-radius-sm);">Remove</button>
+                  </div>
+                </div>
+              `;
+              container.append(meetHtml);
+            }
+          });
+
+          if (!hasFarmerMeet) {
+            container.html(`<div class="text-center py-4 text-muted" style="font-family: var(--s-font-sans); font-size: 0.84rem;">No scheduled meetings found. Book one above!</div>`);
+          }
+        } else {
+          container.html(`<div class="text-center py-4 text-muted" style="font-family: var(--s-font-sans); font-size: 0.84rem;">No scheduled meetings found. Book one above!</div>`);
+        }
+      }).fail(function() {
+        container.html(`<div class="text-center py-4 text-muted" style="font-family: var(--s-font-sans); font-size: 0.84rem;">Offline mode. Could not load classes from server.</div>`);
+      });
+    }
+
+    function launchClassroom(topic) {
+      const cleanTopic = topic.replace(/\s+/g, '') + 'MeetRoom';
+      appCapsule.innerHTML = `
+        <div style="height: 100vh; width: 100vw; position: fixed; top: 0; left: 0; z-index: 10000; background: #000;">
+          <iframe width="100%" height="100%" style="border: none;" frameborder="0"
+            src="https://meet.jit.si/${encodeURIComponent(cleanTopic)}" allow="camera; microphone; fullscreen; display-capture"></iframe>
+          <button onclick="location.reload()" style="position: absolute; top: 12px; right: 12px; z-index: 10001; background: rgba(255,255,255,0.2); border: none; color: #fff; padding: 6px 12px; border-radius: 4px; font-family: sans-serif; font-size: 0.8rem; cursor: pointer;">Exit Room</button>
+        </div>
+      `;
+    }
+
+    function deleteMeeting(id) {
+      loader.setAttribute("style", "display: flex;");
+      loader.querySelector('.s-loader-text').textContent = "Deleting class schedule...";
+      
+      $.ajax({
+        type: "POST",
+        url: "https://knitkraft.onrender.com/api/deleteMeet",
+        data: { id: id },
+        success: function (data) {
+          loader.setAttribute("style", "display: none;");
+          if (data.status === "success") {
+            loadMeetings();
+          } else {
+            const errModal = new bootstrap.Modal(document.getElementById('DialogIconedDanger'));
+            errModal.show();
+          }
+        },
+        error: function() {
+          loader.setAttribute("style", "display: none;");
+          const errModal = new bootstrap.Modal(document.getElementById('DialogIconedDanger'));
+          errModal.show();
+        }
+      });
+    }
+
+    // Handle form booking submission
+    $(document).ready(function () {
+      loadMeetings();
+
+      $("#bookMeetForm").submit(function (e) {
+        e.preventDefault();
+        
+        // Hide request modal
+        const requestModal = bootstrap.Modal.getInstance(document.getElementById('requestModal'));
+        requestModal.hide();
+
+        loader.setAttribute("style", "display: flex;");
+        loader.querySelector('.s-loader-text').textContent = "Submitting meet request...";
+
+        const form = $(this);
+        $.ajax({
+          type: "POST",
+          url: "https://knitkraft.onrender.com/api/bookMeet",
+          data: form.serialize(),
+          success: function (data) {
+            loader.setAttribute("style", "display: none;");
+            if (data.status === "success") {
+              notification("SUCCESS-NOTIFICATION", 3500);
+              loadMeetings();
+              form.trigger('reset');
+            } else {
+              const errModal = new bootstrap.Modal(document.getElementById('DialogIconedDanger'));
+              errModal.show();
+            }
+          },
+          error: function() {
+            loader.setAttribute("style", "display: none;");
+            const errModal = new bootstrap.Modal(document.getElementById('DialogIconedDanger'));
+            errModal.show();
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

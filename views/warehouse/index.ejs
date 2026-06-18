@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'KnitKraft — Warehouse Dashboard' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page" style="padding-bottom: 90px;">
+
+    <!-- Wallet Balance Card -->
+    <div class="s-balance-card">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <div>
+          <div class="s-balance-eyebrow">Earned Yet</div>
+          <div class="s-balance-amount">₹25,612.50</div>
+        </div>
+        <div style="font-size: 2.2rem; opacity: 0.85;">🏭</div>
+      </div>
+
+      <hr class="s-balance-rule"/>
+
+      <!-- Action Row -->
+      <div class="s-action-row">
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-down-outline"></ion-icon>
+          </div>
+          <span>Withdraw</span>
+        </a>
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#sendActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </div>
+          <span>Send</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div class="s-stats-grid">
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📈 Income</div>
+        <div class="s-stat-val green">₹552.95</div>
+      </div>
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📉 Expenses</div>
+        <div class="s-stat-val gold">₹86.45</div>
+      </div>
+    </div>
+
+    <!-- Bookings/Orders Section -->
+    <div class="s-section-heading d-flex justify-content-between align-items-center mb-3">
+      <div style="flex:1;">
+        <h3 style="margin:0;">Storage Bookings</h3>
+        <span class="s-rule-accent"></span>
+      </div>
+      
+      <!-- Filters -->
+      <div class="btn-group btn-group-sm" role="group" style="font-family: var(--s-font-mono);">
+        <input type="radio" class="btn-check" name="status" id="pending" autocomplete="off" checked onclick="fillWarehouseBookings()"/>
+        <label class="btn btn-outline-secondary py-1 px-3" for="pending" style="min-height: auto; font-size: 0.7rem;">Pending</label>
+        
+        <input type="radio" class="btn-check" name="status" id="confirmed" autocomplete="off" onclick="fillWarehouseBookings()"/>
+        <label class="btn btn-outline-secondary py-1 px-3" for="confirmed" style="min-height: auto; font-size: 0.7rem;">Confirmed</label>
+      </div>
+    </div>
+
+    <!-- Bookings List -->
+    <div id="warehouseBookings" style="margin-bottom: 24px;">
+      <!-- Dynamic list -->
+    </div>
+
+    <!-- Request Modal Show Trigger (hidden) -->
+    <a data-bs-toggle="modal" data-bs-target="#DialogForm" id="modelShow" style="display: none;"></a>
+
+    <!-- Warehouse Booking Action Modal -->
+    <div class="modal fade" id="DialogForm" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Deposit / Storage Update</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form id="requestWareHouseForm">
+              
+              <div class="s-field">
+                <label for="woolTypeInput">Wool Type</label>
+                <input type="text" id="woolTypeInput" placeholder="Wool type"/>
+              </div>
+
+              <div class="s-field">
+                <label for="quantityInput">Quantity (kg)</label>
+                <input type="number" id="quantityInput" placeholder="Enter quantity"/>
+              </div>
+
+              <div class="s-field">
+                <label for="fromDateInput">From Date</label>
+                <input type="date" id="fromDateInput"/>
+              </div>
+
+              <div class="s-field">
+                <label for="toDateInput">To Date</label>
+                <input type="date" id="toDateInput"/>
+              </div>
+
+              <div class="s-field">
+                <label for="shelfInput">Assigned Storage Shelf</label>
+                <input type="text" id="shelfInput" placeholder="e.g. Shelf A-4"/>
+              </div>
+
+              <div class="s-field">
+                <label for="statusInput">Status</label>
+                <select id="statusInput">
+                  <option value="pending">Pending</option>
+                  <option value="confirmed">Confirmed</option>
+                </select>
+              </div>
+
+              <div class="s-field">
+                <label for="messageInput">Notes / Instructions</label>
+                <textarea id="messageInput" rows="2" class="form-control" style="min-height: auto;" placeholder="Temperature requirements, special wool quality details..."></textarea>
+              </div>
+
+              <div class="d-flex gap-2 mt-3">
+                <button type="button" class="s-btn-primary flex-fill m-0" id="updateBtn">Update Booking</button>
+                <button type="button" class="s-btn-outline flex-fill m-0" data-bs-dismiss="modal" style="color: var(--s-accent); border-color: var(--s-accent);">Cancel</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Action Sheet -->
+    <div class="modal fade" id="withdrawActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Withdraw Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="s-field">
+                <label for="account2d">From Account</label>
+                <select id="account2d">
+                  <option value="0">Savings (*** 5019)</option>
+                  <option value="1">Investment (*** 6212)</option>
+                </select>
+              </div>
+              <div class="s-field">
+                <label for="withdrawAmount">Amount (₹)</label>
+                <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" value="100"/>
+              </div>
+              <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Withdraw</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Send Action Sheet -->
+    <div class="modal fade" id="sendActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Send Funds</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="s-field">
+                <label for="account2">From Account</label>
+                <select id="account2">
+                  <option value="0">Savings (*** 5019)</option>
+                  <option value="1">Investment (*** 6212)</option>
+                </select>
+              </div>
+              <div class="s-field">
+                <label for="sendTo">Recipient Bank ID / UPI</label>
+                <input type="text" id="sendTo" placeholder="Enter UPI ID"/>
+              </div>
+              <div class="s-field">
+                <label for="sendAmount">Amount (₹)</label>
+                <input type="number" id="sendAmount" placeholder="Enter amount to send" value="100"/>
+              </div>
+              <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Transfer Funds</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    var ALL_WAREHOUSE_BOOKINGS = [];
+
+    // Load warehouse bookings from API (mock if offline)
+    $.getJSON("/api/getWarehousesBooking", function (data) {
+      if (data.status === "success") {
+        ALL_WAREHOUSE_BOOKINGS = data.warehouse;
+        fillWarehouseBookings();
+      }
+    }).fail(function() {
+      // Mock data
+      var mockData = [
+        {
+          _id: "w01",
+          farmerId: "f01",
+          name: "Mohan Lal",
+          quantity: "200",
+          woolType: "Premium Merino",
+          fromDate: "2026-06-20",
+          toDate: "2026-09-20",
+          status: "pending",
+          message: "Keep at dry temp.",
+          shelf: ""
+        },
+        {
+          _id: "w02",
+          farmerId: "f02",
+          name: "Suraj Bhan",
+          quantity: "450",
+          woolType: "Bikaner Coarse",
+          fromDate: "2026-06-15",
+          toDate: "2026-08-15",
+          status: "confirmed",
+          message: "Standard storage.",
+          shelf: "Shelf C-12"
+        }
+      ];
+      ALL_WAREHOUSE_BOOKINGS = mockData;
+      fillWarehouseBookings();
+    });
+
+    function fillWarehouseBookings() {
+      var selectedStatus = document.querySelector('input[name="status"]:checked').id;
+      var containerHtml = "";
+
+      var filtered = ALL_WAREHOUSE_BOOKINGS.filter(function(b) {
+        return b.status.toLowerCase() === selectedStatus;
+      });
+
+      if (filtered.length === 0) {
+        containerHtml = `
+          <div class="card p-3 text-center" style="font-family: var(--s-font-sans); color: var(--s-muted-fg);">
+            No ${selectedStatus} storage bookings found.
+          </div>
+        `;
+      } else {
+        filtered.forEach(function (warehouse) {
+          containerHtml += `
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title" style="margin: 0; font-size: 1.1rem;">${warehouse.name}</h5>
+                  <span class="badge ${warehouse.status === 'confirmed' ? 'badge-success' : 'badge-warning'}" style="font-family: var(--s-font-mono); font-size: 0.6rem; text-transform: uppercase;">${warehouse.status}</span>
+                </div>
+                <div style="font-size: 0.88rem; color: var(--s-fg); margin-bottom: 12px;">
+                  <div><strong>Wool Type:</strong> ${warehouse.woolType}</div>
+                  <div><strong>Quantity:</strong> ${warehouse.quantity} kg</div>
+                  ${warehouse.shelf ? `<div><strong>Shelf:</strong> ${warehouse.shelf}</div>` : ''}
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mt-2 pt-2" style="border-top: 1px solid var(--s-border);">
+                  <div class="d-flex align-items-center gap-1" style="font-family: var(--s-font-mono); font-size: 0.72rem; color: var(--s-muted-fg);">
+                    <span>${warehouse.fromDate}</span>
+                    <ion-icon name="arrow-forward-outline"></ion-icon>
+                    <span>${warehouse.toDate}</span>
+                  </div>
+                  <button class="s-btn-primary btn-sm py-1 px-3" style="min-height: auto; font-size: 0.75rem; margin: 0;" onclick="changeModelBoxInputValue('${warehouse._id}')">Action</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      }
+      $("#warehouseBookings").html(containerHtml);
+    }
+
+    function changeModelBoxInputValue(id) {
+      var warehouse = ALL_WAREHOUSE_BOOKINGS.find(function(w) { return w._id === id; });
+      if (!warehouse) return;
+
+      $("#quantityInput").val(warehouse.quantity);
+      $("#woolTypeInput").val(warehouse.woolType);
+      $("#fromDateInput").val(warehouse.fromDate);
+      $("#toDateInput").val(warehouse.toDate);
+      $("#statusInput").val(warehouse.status);
+      $("#messageInput").val(warehouse.message || "");
+      $("#shelfInput").val(warehouse.shelf || "");
+      $("#updateBtn").attr("onclick", `updateWarehouseBooking('${warehouse._id}')`);
+      
+      document.getElementById("modelShow").click();
+    }
+
+    function updateWarehouseBooking(id) {
+      var warehouse = ALL_WAREHOUSE_BOOKINGS.find(function(w) { return w._id === id; });
+      if (!warehouse) return;
+
+      var data = {
+        ...warehouse,
+        quantity: $("#quantityInput").val(),
+        fromDate: $("#fromDateInput").val(),
+        toDate: $("#toDateInput").val(),
+        woolType: $("#woolTypeInput").val(),
+        status: $("#statusInput").val(),
+        message: $("#messageInput").val(),
+        shelf: $("#shelfInput").val()
+      };
+
+      $.ajax({
+        type: "POST",
+        url: "/api/updateWarehouseBooking",
+        data: JSON.stringify(data),
+        contentType: "application/json",
+        dataType: "json",
+        success: function (response) {
+          if (response.status === "success") {
+            window.location.reload();
+          } else {
+            alert("Booking updated.");
+            window.location.reload();
+          }
+        },
+        error: function () {
+          // Offline/mock update
+          var index = ALL_WAREHOUSE_BOOKINGS.findIndex(function(w) { return w._id === id; });
+          if (index !== -1) {
+            ALL_WAREHOUSE_BOOKINGS[index] = data;
+            fillWarehouseBookings();
+            var modalEl = document.getElementById('DialogForm');
+            var modal = bootstrap.Modal.getInstance(modalEl);
+            if (modal) modal.hide();
+          }
+        }
+      });
+    }
+  </script>
+</body>
+</html>

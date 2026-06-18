@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — WoolKart' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page">
+
+    <!-- Tab Toggle -->
+    <div class="section mt-1">
+      <div class="card">
+        <div class="card-body p-0">
+          <ul class="nav nav-tabs lined" role="tablist">
+            <li class="nav-item flex-fill text-center">
+              <a class="nav-link active" data-bs-toggle="tab" href="#buy" role="tab">
+                Buy Products
+              </a>
+            </li>
+            <li class="nav-item flex-fill text-center">
+              <a class="nav-link" data-bs-toggle="tab" href="#sell" role="tab">
+                Sell Produce
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-3">
+
+      <!-- BUY TAB -->
+      <div class="tab-pane fade show active" id="buy" role="tabpanel">
+        <div class="s-section-heading">
+          <h3>Marketplace</h3>
+          <span class="s-rule-accent"></span>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="mb-3 px-1 d-flex gap-2 overflow-auto pb-2" style="white-space: nowrap; -webkit-overflow-scrolling: touch;">
+          <button class="s-filter-pill active" onclick="filterProducts('all')">All Produce</button>
+          <button class="s-filter-pill" onclick="filterProducts('raw')">Raw Wool</button>
+          <button class="s-filter-pill" onclick="filterProducts('product')">Finished Goods</button>
+          <button class="s-filter-pill" onclick="filterProducts('verified')">✓ Verified</button>
+        </div>
+
+        <style>
+          .s-filter-pill {
+            background: var(--s-card);
+            border: 1px solid var(--s-border);
+            color: var(--s-fg);
+            font-family: var(--s-font-mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+          }
+          .s-filter-pill:hover, .s-filter-pill.active {
+            background: var(--s-accent);
+            border-color: var(--s-accent);
+            color: var(--s-accent-fg);
+            box-shadow: var(--s-shadow-sm);
+          }
+        </style>
+
+        <div class="row" id="allBuys">
+          <!-- Item 1 -->
+          <div class="col-6 mb-3">
+            <div class="s-product-card" data-category="raw" data-verified="true">
+              <div class="position-relative">
+                <img src="/assets/img/sample/photo/Alpaca wool.png" alt="Alpaca Wool" class="s-product-img"/>
+                <div style="position: absolute; top: 8px; left: 8px;">
+                  <span class="s-verified-badge">✓ Verified</span>
+                </div>
+              </div>
+              <div class="s-product-body">
+                <div class="s-product-price">₹14 / kg</div>
+                <div class="s-product-name">Premium Alpaca Wool</div>
+                <a href="/Woolkart/buynow?title=Premium+Alpaca+Wool&price=14&image=Alpaca+wool.png&desc=Premium+grade+raw+alpaca+wool%2C+cleaned+and+sorted.+Superb+staple+length+with+a+remarkably+soft+hand-feel." class="s-btn-primary btn-sm py-1 d-block text-center" style="min-height: auto; font-size: 0.8rem; line-height: 1.5;">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="col-6 mb-3">
+            <div class="s-product-card" data-category="product" data-verified="true">
+              <div class="position-relative">
+                <img src="/assets/img/sample/photo/Alpaca product.png" alt="Alpaca Wool Product" class="s-product-img"/>
+                <div style="position: absolute; top: 8px; left: 8px;">
+                  <span class="s-verified-badge">✓ Verified</span>
+                </div>
+              </div>
+              <div class="s-product-body">
+                <div class="s-product-price">₹45 / kg</div>
+                <div class="s-product-name">Alpaca Wool Product</div>
+                <a href="/Woolkart/buynow?title=Alpaca+Wool+Product&price=45&image=Alpaca+product.png&desc=Folded+premium+alpaca+wool+blankets+and+fleece+goods.+Warm%2C+organic%2C+and+hypoallergenic." class="s-btn-primary btn-sm py-1 d-block text-center" style="min-height: auto; font-size: 0.8rem; line-height: 1.5;">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3 -->
+          <div class="col-6 mb-3">
+            <div class="s-product-card" data-category="raw" data-verified="true">
+              <div class="position-relative">
+                <img src="/assets/img/sample/photo/Vicuna wool.png" alt="Vicuna Wool" class="s-product-img"/>
+                <div style="position: absolute; top: 8px; left: 8px;">
+                  <span class="s-verified-badge">✓ Verified</span>
+                </div>
+              </div>
+              <div class="s-product-body">
+                <div class="s-product-price">₹120 / kg</div>
+                <div class="s-product-name">Vicuna Raw Wool</div>
+                <a href="/Woolkart/buynow?title=Vicuna+Raw+Wool&price=120&image=Vicuna+wool.png&desc=Rare+and+luxurious+raw+vicuna+fleece.+Super-fine+fibers+measuring+under+12+microns+for+the+ultimate+in+luxury+yarns." class="s-btn-primary btn-sm py-1 d-block text-center" style="min-height: auto; font-size: 0.8rem; line-height: 1.5;">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4 -->
+          <div class="col-6 mb-3">
+            <div class="s-product-card" data-category="product" data-verified="true">
+              <div class="position-relative">
+                <img src="/assets/img/sample/photo/Vicuna Product.png" alt="Vicuna Wool Product" class="s-product-img"/>
+                <div style="position: absolute; top: 8px; left: 8px;">
+                  <span class="s-verified-badge">✓ Verified</span>
+                </div>
+              </div>
+              <div class="s-product-body">
+                <div class="s-product-price">₹280 / kg</div>
+                <div class="s-product-name">Vicuna Wool Product</div>
+                <a href="/Woolkart/buynow?title=Vicuna+Wool+Product&price=280&image=Vicuna+Product.png&desc=A+luxury+vicuna+wool+shawl%2Fscarf%2C+featuring+an+unrivaled+softness%2C+natural+golden+hue%2C+and+lightweight+comfort." class="s-btn-primary btn-sm py-1 d-block text-center" style="min-height: auto; font-size: 0.8rem; line-height: 1.5;">Buy Now</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- SELL TAB -->
+      <div class="tab-pane fade" id="sell" role="tabpanel">
+        <div class="s-section-heading">
+          <h3>List Your Product</h3>
+          <span class="s-rule-accent"></span>
+        </div>
+
+        <div class="card mb-3">
+          <div class="card-body">
+            <form id="sellForm">
+
+              <!-- Photo Upload -->
+              <div class="s-field">
+                <label>Product Photo</label>
+                <div class="custom-file-upload py-4 text-center border-dashed rounded" id="fileUpload1" style="background: var(--s-muted); border: 1px dashed var(--s-border); cursor: pointer;">
+                  <input type="file" id="fileuploadInput" accept=".png, .jpg, .jpeg" style="display: none;"/>
+                  <label for="fileuploadInput" style="margin: 0; cursor: pointer; display: block;">
+                    <div style="font-size: 2rem; color: var(--s-accent);"><ion-icon name="arrow-up-circle-outline"></ion-icon></div>
+                    <span style="font-family: var(--s-font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg);">Upload Product Photo</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Product Title -->
+              <div class="s-field">
+                <label for="Product_Title">Product Title</label>
+                <input type="text" id="Product_Title" placeholder="e.g. Fine Merino Wool Batch A"/>
+              </div>
+
+              <!-- Description -->
+              <div class="s-field">
+                <label for="Product_Description">Product Description</label>
+                <textarea id="Product_Description" rows="2" class="form-control" placeholder="Describe the quality, color, micron, and origin..." style="min-height: auto;"></textarea>
+              </div>
+
+              <!-- Select Batch -->
+              <div class="s-field">
+                <label for="Product_Category">Select Batch</label>
+                <select id="Product_Category" onchange="updateExpectedMSP(this.value)">
+                  <option value="1">Batch 1 (B4TIJ)</option>
+                  <option value="2">Batch 2 (B8KIJ)</option>
+                </select>
+              </div>
+              <div style="font-family: var(--s-font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-accent); margin-bottom: 20px;">
+                Expected MSP: <span id="ExpectedMSP">₹450</span>
+              </div>
+
+              <!-- Price -->
+              <div class="s-field">
+                <label for="price">Price (₹ / kg)</label>
+                <input type="number" id="price" placeholder="Enter listing price"/>
+              </div>
+
+              <!-- Tax Rate -->
+              <div class="s-field">
+                <label for="Tax_type">Tax Rate</label>
+                <select id="Tax_type">
+                  <option value="1">5% GST</option>
+                  <option value="2">10% GST</option>
+                  <option value="3">18% GST</option>
+                  <option value="4">28% GST</option>
+                </select>
+              </div>
+
+              <!-- Shearing Certificate -->
+              <div class="s-field">
+                <label>Verification Certificate</label>
+                <div class="custom-file-upload py-4 text-center border-dashed rounded" id="certificate" style="background: var(--s-muted); border: 1px dashed var(--s-border); cursor: pointer;">
+                  <input type="file" id="fileuploadInput3" accept=".png, .jpg, .jpeg, .pdf" style="display: none;"/>
+                  <label for="fileuploadInput3" style="margin: 0; cursor: pointer; display: block;">
+                    <div style="font-size: 2rem; color: var(--s-accent);"><ion-icon name="document-attach-outline"></ion-icon></div>
+                    <span style="font-family: var(--s-font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg);">Upload Lab/Shearing Certificate</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit -->
+              <button type="submit" id="submitButton" class="s-btn-primary w-100">Submit Listing</button>
+
+            </form>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    function filterProducts(category) {
+      const cards = document.querySelectorAll('#allBuys > .col-6');
+      
+      // Update active pill styling
+      document.querySelectorAll('.s-filter-pill').forEach(pill => {
+        pill.classList.remove('active');
+      });
+      if (event && event.currentTarget) {
+        event.currentTarget.classList.add('active');
+      }
+
+      cards.forEach(card => {
+        const pCard = card.querySelector('.s-product-card');
+        if (!pCard) return;
+        const cat = pCard.getAttribute('data-category');
+        const verified = pCard.getAttribute('data-verified');
+
+        if (category === 'all') {
+          card.style.display = 'block';
+        } else if (category === 'raw' && cat === 'raw') {
+          card.style.display = 'block';
+        } else if (category === 'product' && cat === 'product') {
+          card.style.display = 'block';
+        } else if (category === 'verified' && verified === 'true') {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function updateExpectedMSP(val) {
+      document.getElementById('ExpectedMSP').textContent = '₹' + (500 * (1 - parseInt(val) / 10));
+    }
+
+    // Handle File Upload text updates
+    document.getElementById('fileuploadInput').addEventListener('change', function() {
+      var name = this.files[0] ? this.files[0].name : "Upload Product Photo";
+      this.nextElementSibling.querySelector('span').textContent = name;
+    });
+
+    document.getElementById('fileuploadInput3').addEventListener('change', function() {
+      var name = this.files[0] ? this.files[0].name : "Upload Lab/Shearing Certificate";
+      this.nextElementSibling.querySelector('span').textContent = name;
+    });
+
+    // Handle Client-side adding of product cards
+    document.getElementById('sellForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const productTitle = document.getElementById('Product_Title').value || "New Raw Wool";
+      const price = document.getElementById('price').value || "14";
+      const fileInput = document.getElementById('fileuploadInput');
+      
+      let imgSrc = "/assets/img/sample/photo/Vicuna wool.png";
+      if (fileInput.files[0]) {
+        imgSrc = URL.createObjectURL(fileInput.files[0]);
+      }
+
+      const newProductHtml = `
+        <div class="col-6 mb-3">
+          <div class="s-product-card" data-category="raw" data-verified="false">
+            <div class="position-relative">
+              <img src="${imgSrc}" alt="${productTitle}" class="s-product-img"/>
+              <div style="position: absolute; top: 8px; left: 8px;">
+                <span class="s-verified-badge" style="color: #B8860B; background: rgba(184,134,11,0.08); border-color: rgba(184,134,11,0.2);">Pending</span>
+              </div>
+            </div>
+            <div class="s-product-body">
+              <div class="s-product-price">₹${price} / kg</div>
+              <div class="s-product-name">${productTitle}</div>
+              <a href="/Woolkart/buynow?title=${encodeURIComponent(productTitle)}&price=${price}&image=Vicuna+wool.png&desc=${encodeURIComponent(productTitle + " - Listed by you. Quality verification pending.")}" class="s-btn-primary btn-sm py-1 d-block text-center" style="min-height: auto; font-size: 0.8rem; line-height: 1.5;">Buy Now</a>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('allBuys').insertAdjacentHTML('afterbegin', newProductHtml);
+
+      // Switch to buy tab
+      const buyTabEl = document.querySelector('a[href="#buy"]');
+      const bsTab = new bootstrap.Tab(buyTabEl);
+      bsTab.show();
+
+      // Reset form
+      this.reset();
+    });
+  </script>
+</body>
+</html>

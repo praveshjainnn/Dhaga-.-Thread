@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'KnitKraft — Teacher Dashboard' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page" style="padding-bottom: 90px;">
+
+    <!-- Section Heading -->
+    <div class="s-section-heading">
+      <h3>Teacher Portal</h3>
+      <p style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); margin: 0 0 6px;">Manage training consultation meetings with farmers.</p>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Meetings Container -->
+    <div style="margin-bottom: 24px;">
+      <div class="small-caps mb-2 px-1">Training Consultations</div>
+      <div id="allMeetings">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+
+    <!-- Join Call Float Button -->
+    <div style="position: fixed; bottom: 80px; right: 20px; z-index: 99;">
+      <button class="s-icon-btn bg-primary text-white" data-bs-toggle="modal" data-bs-target="#DialogBasic" style="width: 50px; height: 50px; box-shadow: var(--s-shadow-lg);">
+        <ion-icon name="videocam-outline" style="font-size: 1.5rem;"></ion-icon>
+      </button>
+    </div>
+
+    <!-- Join Call Modal -->
+    <div class="modal fade" id="DialogBasic" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Join Virtual Classroom</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body" style="font-family: var(--s-font-sans); font-size: 0.92rem; color: var(--s-fg);">
+            Are you ready to join the classroom to teach wool grading best practices and sheepherding health tips?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary py-1 px-3" data-bs-dismiss="modal" style="min-height: auto;">Cancel</button>
+            <a href="/Learning/meetPage" class="s-btn-primary py-1 px-3 m-0" style="min-height: auto; text-decoration: none;">Start Session</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- Override Bottom Menu for Teacher Dashboard -->
+  <style>
+    /* Hide the default generic bottom menu, show our custom one */
+    .appBottomMenu {
+      display: none !important;
+    }
+    .teacherBottomMenu {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      height: 60px;
+      background: var(--s-bg);
+      border-top: 1px solid var(--s-border);
+      box-shadow: 0 -1px 0 var(--s-border), var(--s-shadow-sm);
+      z-index: 99;
+    }
+    .teacherBottomMenu .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      text-decoration: none;
+      color: var(--s-muted-fg);
+      font-family: var(--s-font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      transition: all 0.2s ease-out;
+    }
+    .teacherBottomMenu .item.active, .teacherBottomMenu .item:hover {
+      color: var(--s-accent);
+    }
+    .teacherBottomMenu .item ion-icon {
+      font-size: 1.3rem;
+    }
+  </style>
+
+  <div class="teacherBottomMenu">
+    <a href="/teacher" class="item active">
+      <ion-icon name="pie-chart-outline"></ion-icon>
+      <strong>Overview</strong>
+    </a>
+    <a href="/teacher/allFarmers" class="item">
+      <ion-icon name="people-outline"></ion-icon>
+      <strong>Farmers</strong>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    // Fetch and render teacher meetings
+    $.getJSON("/api/getMeetings", function (data) {
+      renderMeetings(data);
+    }).fail(function() {
+      // Mock data
+      var mockData = {
+        status: "success",
+        meetings: [
+          {
+            _id: "t001",
+            name: "Ramesh Sharma",
+            topic: "Advanced Shearing Techniques",
+            date: "2026-06-20",
+            time: "10:00",
+            message: "Need help understanding wool yield metrics.",
+            status: "Pending",
+            response: ""
+          }
+        ]
+      };
+      renderMeetings(mockData);
+    });
+
+    function renderMeetings(data) {
+      var allMeetings = "";
+      if (data.status === "success" && data.meetings && data.meetings.length > 0) {
+        data.meetings.forEach(function (key) {
+          var badgeClass = "badge-primary";
+          if (key.status.toLowerCase() === "pending") badgeClass = "badge-warning";
+          else if (key.status.toLowerCase() === "approve" || key.status.toLowerCase() === "approved") badgeClass = "badge-success";
+          else if (key.status.toLowerCase() === "reject" || key.status.toLowerCase() === "rejected") badgeClass = "badge-danger";
+
+          allMeetings += `
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <h5 class="card-title" style="margin:0; font-size: 1.1rem;">${key.name}</h5>
+                  <span class="badge ${badgeClass}" style="font-family: var(--s-font-mono); font-size: 0.6rem; text-transform: uppercase;">${key.status}</span>
+                </div>
+                <h6 style="font-family: var(--s-font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg); margin-bottom: 12px;">Topic: ${key.topic}</h6>
+                
+                <div style="font-size: 0.88rem; color: var(--s-fg); line-height: 1.5; margin-bottom: 12px;">
+                  <div><strong>Date:</strong> ${key.date} | <strong>Time:</strong> ${key.time}</div>
+                  <div><strong>Notes:</strong> "${key.message}"</div>
+                </div>
+
+                <div class="s-field">
+                  <label for="resp-${key._id}">Response details</label>
+                  <input type="text" id="resp-${key._id}" class="form-control" value="${key.response || ''}" placeholder="Class details or link..."/>
+                </div>
+
+                <div class="d-flex gap-2">
+                  <button onclick="updateMeeting('${key._id}', 'Approved', document.getElementById('resp-${key._id}').value)" class="s-btn-primary flex-fill py-1" style="min-height:36px; margin:0; font-size: 0.85rem;">Approve</button>
+                  <button onclick="updateMeeting('${key._id}', 'Rejected', document.getElementById('resp-${key._id}').value)" class="s-btn-outline flex-fill py-1" style="min-height:36px; margin:0; font-size: 0.85rem; color: var(--s-accent); border-color: var(--s-accent);">Reject</button>
+                </div>
+              </div>
+            </div>
+          `;
+        });
+      } else {
+        allMeetings = `
+          <div class="card p-3 text-center" style="font-family: var(--s-font-sans); color: var(--s-muted-fg);">
+            No training requests listed yet.
+          </div>
+        `;
+      }
+      $("#allMeetings").html(allMeetings);
+    }
+
+    function updateMeeting(id, status, response) {
+      $.ajax({
+        url: "/api/updateMeet",
+        type: "POST",
+        data: {
+          id: id,
+          meetResponse: response,
+          status: status,
+        },
+        success: function (data) {
+          if (data.status === "success") {
+            window.location.reload();
+          } else {
+            alert("Updated offline (demo mode status changed to " + status + ").");
+          }
+        },
+        error: function() {
+          alert("Updated locally (demo mode status changed to " + status + ").");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!-- Serif Header -->
+<header class="s-header">
+  <div style="display: flex; align-items: center; gap: 10px;">
+    <% if (typeof showBack !== 'undefined' && showBack) { %>
+      <a href="javascript:history.back()" class="s-icon-btn" aria-label="Go Back">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+    <% } else { %>
+      <button class="s-icon-btn" id="menuBtn" onclick="openSidebar()" aria-label="Menu">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+    <% } %>
+    <a href="/index" class="s-header-brand">Dhaga<em>.Thread</em> 🧶</a>
+  </div>
+
+  <div style="display: flex; align-items: center; gap: 8px;">
+    <!-- Weather Trigger -->
+    <button class="s-icon-btn" data-bs-toggle="modal" data-bs-target="#DialogIconedweather" title="Weather Forecast">
+      <ion-icon name="rainy-outline"></ion-icon>
+    </button>
+    <!-- Notifications -->
+    <a href="/app-notifications.html" class="s-icon-btn" style="position: relative;" aria-label="Notifications">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span class="dot"></span>
+    </a>
+    <!-- Profile Avatar -->
+    <a href="/overview/profile.html">
+      <img src="/assets/img/sample/avatar/avatar1.jpg" alt="Profile" class="s-avatar"/>
+    </a>
+  </div>
+</header>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#FAFAF8"/>
+  <title>Dhaga.Thread — Register</title>
+  <meta name="description" content="Create an account on Dhaga.Thread, the all-in-one wool industry platform."/>
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" sizes="32x32"/>
+  <link rel="stylesheet" href="../assets/css/src/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../assets/css/serif.css"/>
+  <link rel="manifest" href="../__manifest.json"/>
+</head>
+<body>
+<div class="s-glow"></div>
+
+<div class="s-auth-page">
+
+  <!-- Brand -->
+  <div class="s-auth-brand">
+    <h1>Dhaga.Thread</h1>
+    <p>Modernizing the Wool Sector</p>
+  </div>
+
+  <!-- Card -->
+  <div class="s-auth-card">
+
+    <!-- Section label -->
+    <div class="s-section-label" style="margin-bottom:20px;">
+      <span class="line"></span>
+      <span class="text">Register</span>
+      <span class="line"></span>
+    </div>
+
+    <h2 class="s-auth-title">Create account.</h2>
+    <p class="s-auth-subtitle">Fill in the details below to join the Dhaga.Thread network.</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger" style="font-family: var(--s-font-sans); font-size: 0.85rem; border-radius: var(--s-radius); margin-bottom: 15px; background: rgba(220, 53, 69, 0.1); border-color: rgba(220, 53, 69, 0.2); color: #dc3545; padding: 10px 12px;">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="./app-register" method="post" id="registerForm">
+
+      <div class="s-field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your full name" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="email1">E-mail address</label>
+        <input type="email" id="email1" name="email" placeholder="your@email.com" autocomplete="email" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="password1">Password</label>
+        <input type="password" id="password1" name="password" placeholder="••••••••" autocomplete="new-password" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="password2">Confirm Password</label>
+        <input type="password" id="password2" name="passwordAgain" placeholder="••••••••" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="mobileOrDOB">Mobile Number</label>
+        <input type="tel" id="mobileOrDOB" name="mobileNumber" placeholder="Your 10-digit mobile number" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dateOfBirth" required/>
+      </div>
+
+      <div class="s-field">
+        <label for="roleSelect">I am a</label>
+        <select id="roleSelect" name="role" required>
+          <option value="farmer">🌾 Farmer</option>
+          <option value="seller">🛒 Seller</option>
+          <option value="teacher">📚 Teacher</option>
+          <option value="transport">🚚 Transport</option>
+          <option value="warehouse">🏭 Warehouse</option>
+          <option value="service">🔧 Service</option>
+        </select>
+      </div>
+
+      <!-- Agree Terms -->
+      <div style="margin:20px 0 16px; display: flex; align-items: center; gap: 8px;" class="form-check">
+        <input type="checkbox" class="form-check-input" id="customCheckb1" required style="width: 16px; height: 16px; min-height: 16px; max-height: 16px; margin: 0; padding: 0; display: inline-block; -webkit-appearance: checkbox; appearance: checkbox; opacity: 1; position: static;"/>
+        <label class="form-check-label" for="customCheckb1" style="font-family: var(--s-font-sans); font-size: 0.85rem; color: var(--s-muted-fg); cursor: pointer; margin: 0; padding: 0; display: inline-block; line-height: 1.2;">
+          I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" style="color: var(--s-accent); text-decoration: none; font-weight: 500;">terms and conditions</a>
+        </label>
+      </div>
+
+      <button type="submit" class="s-btn-primary" id="registerBtn">Create Account</button>
+
+    </form>
+
+    <div class="s-auth-links" style="justify-content: center; gap: 8px;">
+      <span style="font-family: var(--s-font-sans); font-size: 0.85rem; color: var(--s-muted-fg);">Already have an account?</span>
+      <a href="../Pages/app-login.html" style="color: var(--s-accent); font-weight: 500;">Sign In</a>
+    </div>
+
+  </div>
+
+  <!-- Footer note -->
+  <p style="margin-top:32px;font-family:var(--s-font-mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--s-muted-fg);text-align:center;">
+    Ministry of Textiles, Government of India
+  </p>
+
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Terms and Conditions</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+      </div>
+      <div class="modal-body" style="font-family: var(--s-font-sans); font-size: 0.92rem; line-height: 1.6; color: var(--s-fg);">
+        <p>
+          Welcome to Dhaga.Thread. By registering, you agree to comply with our guidelines for wool sorting, sheepherding records, shearing logistics, and trading transactions, as supported by the Ministry of Textiles.
+        </p>
+        <p>
+          All data entered during testing is stored client-side or as mock entries. No confidential identity documents are permanently saved in our mock demo environment.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../assets/js/lib/bootstrap.bundle.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="../assets/js/base.js"></script>
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function() {
+    var b = document.getElementById('registerBtn');
+    b.textContent = 'Registering…';
+    b.style.opacity = '0.7';
+  });
+</script>
+</body>
+</html>

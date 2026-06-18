@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'KnitKraft — Transport Dashboard' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page">
+
+    <!-- Section Heading -->
+    <div class="s-section-heading">
+      <h3>Logistics & Transport</h3>
+      <p style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); margin: 0 0 6px;">Manage transportation dispatchments and tracking states.</p>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Transport Orders Table -->
+    <div class="card mb-4" style="overflow: hidden;">
+      <div class="card-body p-0">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0" style="font-family: var(--s-font-sans); font-size: 0.85rem;">
+            <thead style="background: var(--s-muted); font-family: var(--s-font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase;">
+              <tr>
+                <th class="ps-3">Name</th>
+                <th>Contact</th>
+                <th>Addresses</th>
+                <th>Qty</th>
+                <th>Vehicle</th>
+                <th class="pe-3">Action</th>
+              </tr>
+            </thead>
+            <tbody id="transportData">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tracking Modal -->
+    <div class="modal fade" id="trackingModal" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Transit Tracking Timeline</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <div class="s-timeline" id="progressTimeLine">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hidden Trigger for Tracking Modal -->
+    <a data-bs-toggle="modal" data-bs-target="#trackingModal" id="progressTimeLineOpenBtn" style="display: none;"></a>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    var TRANSPORTATION = [];
+
+    // Load data from API (or mock if offline/demo)
+    $.getJSON("/api/getTransports", function (data) {
+      renderTransport(data.status === "success" ? data.transport : []);
+    }).fail(function() {
+      // Mock transport orders
+      var mockData = [
+        {
+          _id: "t01",
+          name: "Amit Patel",
+          email: "amit@farm.com",
+          mobile: "9876543210",
+          address: "Hisar, Haryana",
+          quantity: "150 kg",
+          sourceAddress: "Farm A, Hisar",
+          destAddress: "Tex-Warehouse B, Panipat",
+          vehicleType: "Tata Ace (Mini Truck)",
+          progress: { initiated: true, shipped: false, outForDelivery: false, delivered: false }
+        },
+        {
+          _id: "t02",
+          name: "Vikram Singh",
+          email: "vikram@cargo.com",
+          mobile: "9123456789",
+          address: "Bikaner, Rajasthan",
+          quantity: "400 kg",
+          sourceAddress: "Bikaner Wool Coop",
+          destAddress: "Central Spinning Mills, Ludhiana",
+          vehicleType: "Eicher 14ft",
+          progress: { initiated: true, shipped: true, outForDelivery: true, delivered: false }
+        }
+      ];
+      renderTransport(mockData);
+    });
+
+    function renderTransport(data) {
+      TRANSPORTATION = data;
+      var transportDataHtml = "";
+
+      if (data.length === 0) {
+        transportDataHtml = `
+          <tr>
+            <td colspan="6" class="text-center py-4 text-muted">No transport requests found.</td>
+          </tr>
+        `;
+      } else {
+        data.forEach(function (value, key) {
+          transportDataHtml += `
+            <tr>
+              <td class="ps-3">
+                <div style="font-weight: 500; font-family: var(--s-font-serif);">${value.name}</div>
+                <div style="font-size: 0.72rem; color: var(--s-muted-fg);">${value.email}</div>
+              </td>
+              <td>${value.mobile}</td>
+              <td>
+                <div style="font-size: 0.78rem;"><strong>From:</strong> ${value.sourceAddress}</div>
+                <div style="font-size: 0.78rem;"><strong>To:</strong> ${value.destAddress}</div>
+              </td>
+              <td>${value.quantity}</td>
+              <td style="font-family: var(--s-font-mono); font-size: 0.72rem; text-transform: uppercase;">${value.vehicleType}</td>
+              <td class="pe-3">
+                <button class="s-btn-primary btn-sm py-1 px-3" style="min-height: auto; font-size: 0.75rem;" onclick="openProgressTimeline(${key})">Track</button>
+              </td>
+            </tr>
+          `;
+        });
+      }
+      $("#transportData").html(transportDataHtml);
+    }
+
+    function openProgressTimeline(i) {
+      var record = TRANSPORTATION[i];
+      var progress = record.progress || { initiated: false, shipped: false, outForDelivery: false, delivered: false };
+
+      var timelineHtml = `
+        <div class="s-timeline-item">
+          <div class="s-timeline-dot ${progress.initiated ? 'done' : 'active'}"></div>
+          <div class="s-timeline-content flex-fill">
+            <div style="font-family: var(--s-font-serif); font-size: 0.95rem; font-weight: 600;">Initiated</div>
+            <div style="font-size: 0.82rem; color: var(--s-muted-fg); margin-bottom: 6px;">Dispatch request has been received.</div>
+            <button class="s-btn-primary py-1 px-3" style="min-height:30px; font-size: 0.72rem; margin: 0;" onclick="updateProgress(${i}, 'initiated')">Mark Done</button>
+          </div>
+        </div>
+
+        <div class="s-timeline-item">
+          <div class="s-timeline-dot ${progress.shipped ? 'done' : (progress.initiated ? 'active' : '')}"></div>
+          <div class="s-timeline-content flex-fill">
+            <div style="font-family: var(--s-font-serif); font-size: 0.95rem; font-weight: 600;">Shipped</div>
+            <div style="font-size: 0.82rem; color: var(--s-muted-fg); margin-bottom: 6px;">Consignment is in transit.</div>
+            <button class="s-btn-primary py-1 px-3" style="min-height:30px; font-size: 0.72rem; margin: 0;" onclick="updateProgress(${i}, 'shipped')">Mark Done</button>
+          </div>
+        </div>
+
+        <div class="s-timeline-item">
+          <div class="s-timeline-dot ${progress.outForDelivery ? 'done' : (progress.shipped ? 'active' : '')}"></div>
+          <div class="s-timeline-content flex-fill">
+            <div style="font-family: var(--s-font-serif); font-size: 0.95rem; font-weight: 600;">Out for Delivery</div>
+            <div style="font-size: 0.82rem; color: var(--s-muted-fg); margin-bottom: 6px;">Reaching the destination center.</div>
+            <button class="s-btn-primary py-1 px-3" style="min-height:30px; font-size: 0.72rem; margin: 0;" onclick="updateProgress(${i}, 'outForDelivery')">Mark Done</button>
+          </div>
+        </div>
+
+        <div class="s-timeline-item">
+          <div class="s-timeline-dot ${progress.delivered ? 'done' : (progress.outForDelivery ? 'active' : '')}"></div>
+          <div class="s-timeline-content flex-fill">
+            <div style="font-family: var(--s-font-serif); font-size: 0.95rem; font-weight: 600;">Delivered</div>
+            <div style="font-size: 0.82rem; color: var(--s-muted-fg); margin-bottom: 6px;">Consignment successfully received.</div>
+            <button class="s-btn-primary py-1 px-3" style="min-height:30px; font-size: 0.72rem; margin: 0;" onclick="updateProgress(${i}, 'delivered')">Mark Done</button>
+          </div>
+        </div>
+      `;
+
+      $("#progressTimeLine").html(timelineHtml);
+      document.getElementById("progressTimeLineOpenBtn").click();
+    }
+
+    function updateProgress(i, phase) {
+      var record = TRANSPORTATION[i];
+      if (!record.progress) record.progress = {};
+      record.progress[phase] = true;
+
+      $.ajax({
+        url: "/api/updateTransportProgress",
+        type: "POST",
+        data: {
+          id: record._id,
+          progress: JSON.stringify(record.progress),
+        },
+        success: function (data) {
+          window.location.reload();
+        },
+        error: function() {
+          alert("Progress updated offline (demo mode).");
+          openProgressTimeline(i);
+        }
+      });
+    }
+  </script>
+</body>
+</html>

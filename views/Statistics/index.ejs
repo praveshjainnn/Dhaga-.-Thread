@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Statistics' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Custom Styles for Stats Page -->
+  <style>
+    /* 3D Flip Cards */
+    .s-flip-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .s-flip-card {
+      height: 180px;
+      perspective: 1000px;
+    }
+    .s-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-style: preserve-3d;
+    }
+    .s-flip-card:hover .s-flip-inner {
+      transform: rotateY(180deg);
+    }
+    .s-flip-front, .s-flip-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      border: 1px solid var(--s-border);
+      border-radius: var(--s-radius-lg);
+      box-shadow: var(--s-shadow-sm);
+      overflow: hidden;
+    }
+    .s-flip-front {
+      background: var(--s-card);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+    }
+    .s-flip-back {
+      background: var(--s-muted);
+      transform: rotateY(180deg);
+      border-top: 2px solid var(--s-accent);
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .s-flip-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 1px solid var(--s-border);
+      object-fit: cover;
+      margin-bottom: 8px;
+    }
+    .s-flip-title {
+      font-family: var(--s-font-serif);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--s-fg);
+      margin-bottom: 2px;
+    }
+    .s-flip-price {
+      font-family: var(--s-font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--s-accent);
+    }
+    .s-flip-desc {
+      font-family: var(--s-font-sans);
+      font-size: 0.76rem;
+      line-height: 1.45;
+      color: var(--s-muted-fg);
+      margin: 0;
+      overflow-y: auto;
+      max-height: 100%;
+    }
+  </style>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page">
+
+    <!-- Chart Section -->
+    <div class="s-chart-card">
+      <div class="s-chart-title">Market Analysis</div>
+      <div class="s-chart-subtitle">Wool price indices history</div>
+
+      <!-- Chart Tabs -->
+      <ul class="nav nav-tabs lined mb-3" role="tablist">
+        <li class="nav-item flex-fill text-center">
+          <a class="nav-link active" data-bs-toggle="tab" href="#tab-24h" role="tab">24H</a>
+        </li>
+        <li class="nav-item flex-fill text-center">
+          <a class="nav-link" data-bs-toggle="tab" href="#tab-1w" role="tab">1W</a>
+        </li>
+        <li class="nav-item flex-fill text-center">
+          <a class="nav-link" data-bs-toggle="tab" href="#tab-1m" role="tab">1M</a>
+        </li>
+        <li class="nav-item flex-fill text-center">
+          <a class="nav-link" data-bs-toggle="tab" href="#tab-1y" role="tab">1Y</a>
+        </li>
+      </ul>
+
+      <!-- Chart Content Area -->
+      <div class="tab-content">
+        <div class="tab-pane fade show active" id="tab-24h" role="tabpanel">
+          <div class="chart-example-1"></div>
+        </div>
+        <div class="tab-pane fade" id="tab-1w" role="tabpanel">
+          <div class="chart-example-2"></div>
+        </div>
+        <div class="tab-pane fade" id="tab-1m" role="tabpanel">
+          <div class="chart-example-3"></div>
+        </div>
+        <div class="tab-pane fade" id="tab-1y" role="tabpanel">
+          <div class="chart-example-4"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Marketplace Prices -->
+    <div class="s-section-heading">
+      <h3>Live Market Rates</h3>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Search Controls -->
+    <div class="row mb-3 align-items-center">
+      <div class="col-8 pe-1">
+        <input type="text" id="search-input" class="form-control w-100" placeholder="Filter wool breeds..." style="min-height: 38px; padding: 6px 12px;"/>
+      </div>
+      <div class="col-4 ps-1">
+        <button id="search-btn" class="s-btn-primary w-100 py-1" style="min-height: 38px;">Search</button>
+      </div>
+    </div>
+
+    <!-- Flip Cards Grid -->
+    <div class="s-flip-grid mb-4">
+
+      <!-- Alpaca -->
+      <div class="s-flip-card">
+        <div class="s-flip-inner">
+          <div class="s-flip-front">
+            <img src="/assets/img/alpaca-fleece.jpg" alt="Alpaca" class="s-flip-img"/>
+            <div class="s-flip-title">Alpaca</div>
+            <div class="s-flip-price">₹50.00 / kg</div>
+          </div>
+          <div class="s-flip-back">
+            <p class="s-flip-desc">
+              Alpaca fleece is a super-soft, warm, and durable luxury fiber. Huacaya fleece is dense and crimpy (like sheep's wool), while Suri fleece is silky and dreadlock-like.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Camel Hair -->
+      <div class="s-flip-card">
+        <div class="s-flip-inner">
+          <div class="s-flip-front">
+            <img src="/assets/img/camelwool.jpg" alt="Camel Wool" class="s-flip-img"/>
+            <div class="s-flip-title">Camel Hair</div>
+            <div class="s-flip-price">₹37.50 / kg</div>
+          </div>
+          <div class="s-flip-back">
+            <p class="s-flip-desc">
+              Harvested from Bactrian camels, camel wool consists of a coarse outer guard hair and a extremely soft, insulating undercoat layer used in high-end coats and outerwear.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Merino -->
+      <div class="s-flip-card">
+        <div class="s-flip-inner">
+          <div class="s-flip-front">
+            <img src="/assets/img/MerinoWool.jpeg" alt="Merino" class="s-flip-img"/>
+            <div class="s-flip-title">Merino</div>
+            <div class="s-flip-price">₹15.78 / kg</div>
+          </div>
+          <div class="s-flip-back">
+            <p class="s-flip-desc">
+              The benchmark for apparel wool. Merino sheep yield exceptionally fine, soft, and breathable wool with excellent moisture-wicking properties, ideal for activewear.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Angora -->
+      <div class="s-flip-card">
+        <div class="s-flip-inner">
+          <div class="s-flip-front">
+            <img src="/assets/img/Valeria_Di_Roma_Angora_Red.jpg" alt="Angora" class="s-flip-img"/>
+            <div class="s-flip-title">Angora</div>
+            <div class="s-flip-price">₹37.50 / kg</div>
+          </div>
+          <div class="s-flip-back">
+            <p class="s-flip-desc">
+              Produced by Angora rabbits, Angora fibre is incredibly light, fluffy, and has the highest heat retention of any natural fiber, blended often for luxury yarns.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Extra news box -->
+    <a href="/Pages/app-blog-post" class="s-btn-primary w-100 text-center mb-4 py-2 d-block">Read Textile News Bulletin</a>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="/assets/js/plugins/apexcharts/apexcharts.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    // ApexCharts configurations
+    var chartExample1 = {
+      series: [{ data: [555, 1222, 777, 888, 555, 888, 999, 1222, 777, 888, 555, 888] }],
+      chart: { type: 'area', width: '100%', height: 200, sparkline: { enabled: false } },
+      stroke: { width: 2, curve: 'smooth' },
+      colors: ['#B8860B'],
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      tooltip: { enabled: true }
+    };
+
+    var chartExample2 = {
+      series: [{ data: [512, 405, 666, 1090, 1309, 1400, 1500, 700, 1700, 1600, 1400, 1600] }],
+      chart: { type: 'area', width: '100%', height: 200, sparkline: { enabled: false } },
+      stroke: { width: 2, curve: 'smooth' },
+      colors: ['#B8860B'],
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      tooltip: { enabled: true }
+    };
+
+    var chartExample3 = {
+      series: [{ data: [512, 405, 666, 1090, 1309, 1400, 1500, 700, 405, 666, 1090, 1309] }],
+      chart: { type: 'area', width: '100%', height: 200, sparkline: { enabled: false } },
+      stroke: { width: 2, curve: 'smooth' },
+      colors: ['#B8860B'],
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      tooltip: { enabled: true }
+    };
+
+    var chartExample4 = {
+      series: [{ data: [512, 405, 666, 1090, 1309, 1400, 1500, 700, 1000, 2000, 512, 405] }],
+      chart: { type: 'area', width: '100%', height: 200, sparkline: { enabled: false } },
+      stroke: { width: 2, curve: 'smooth' },
+      colors: ['#B8860B'],
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      tooltip: { enabled: true }
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      new ApexCharts(document.querySelector('.chart-example-1'), chartExample1).render();
+      new ApexCharts(document.querySelector('.chart-example-2'), chartExample2).render();
+      new ApexCharts(document.querySelector('.chart-example-3'), chartExample3).render();
+      new ApexCharts(document.querySelector('.chart-example-4'), chartExample4).render();
+
+      // Search and filter cards
+      $("#search-btn").on("click", function () {
+        var searchTerm = $("#search-input").val().toLowerCase();
+        if (searchTerm === "") {
+          $(".s-flip-card").show();
+        } else {
+          $(".s-flip-card").hide();
+          $(".s-flip-card:contains('" + searchTerm + "')").show();
+        }
+      });
+    });
+
+    // Custom jQuery contains case-insensitive function
+    $.expr[':'].contains = function (a, i, m) {
+      return $(a).text().toLowerCase().indexOf(m[3].toLowerCase()) >= 0;
+    };
+  </script>
+</body>
+</html>

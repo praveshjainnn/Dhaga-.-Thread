@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Learnings Pathway' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Modern Timeline Styles -->
+  <style>
+    .s-roadmap-timeline {
+      position: relative;
+      padding: 24px 16px 100px;
+    }
+    /* Vertical connector line */
+    .s-roadmap-timeline::before {
+      content: '';
+      position: absolute;
+      left: 32px;
+      top: 40px;
+      bottom: 140px;
+      width: 2px;
+      border-left: 2px dashed var(--s-border-hover);
+      z-index: 1;
+    }
+    
+    .s-roadmap-node {
+      position: relative;
+      display: flex;
+      gap: 16px;
+      margin-bottom: 36px;
+      z-index: 2;
+    }
+    
+    .s-roadmap-marker {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--s-card);
+      border: 2px solid var(--s-border-hover);
+      color: var(--s-muted-fg);
+      font-family: var(--s-font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: var(--s-shadow-sm);
+      transition: all 0.25s ease-out;
+    }
+    
+    .s-roadmap-node.active .s-roadmap-marker {
+      background: var(--s-card);
+      border-color: var(--s-accent);
+      color: var(--s-accent);
+      box-shadow: 0 0 8px rgba(184, 134, 11, 0.25);
+    }
+    
+    .s-roadmap-node.completed .s-roadmap-marker {
+      background: #2D6A4F;
+      border-color: #2D6A4F;
+      color: #FFFFFF;
+    }
+
+    .s-roadmap-card {
+      background: var(--s-card);
+      border: 1px solid var(--s-border);
+      border-radius: var(--s-radius-lg);
+      padding: 16px;
+      flex-grow: 1;
+      box-shadow: var(--s-shadow-sm);
+      transition: all 0.25s ease-out;
+    }
+    
+    .s-roadmap-card:hover {
+      border-color: var(--s-accent);
+      box-shadow: var(--s-shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .s-roadmap-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--s-border);
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+    }
+
+    .s-lesson-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      margin-top: 8px;
+      background: var(--s-bg);
+      border: 1px solid var(--s-border);
+      border-radius: var(--s-radius-sm);
+      cursor: pointer;
+      transition: all 0.2s ease-out;
+    }
+
+    .s-lesson-item:hover {
+      border-color: var(--s-accent);
+      background: var(--s-card);
+    }
+    
+    .s-lesson-item.completed {
+      border-color: rgba(45, 106, 79, 0.15);
+      background: rgba(45, 106, 79, 0.02);
+    }
+    
+    .s-lesson-item.completed span {
+      text-decoration: line-through;
+      color: var(--s-muted-fg);
+      font-size: 0.85rem;
+    }
+
+    .s-lesson-item.active {
+      border-color: var(--s-accent);
+      background: rgba(184, 134, 11, 0.02);
+    }
+
+    .s-lesson-item.locked {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+    
+    .s-lesson-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+    
+    /* Pulsing gold dot */
+    .s-pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--s-accent);
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.4);
+      animation: pulse 1.6s infinite;
+    }
+    
+    @keyframes pulse {
+      0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(184, 134, 11, 0.7);
+      }
+      70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(184, 134, 11, 0);
+      }
+      100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(184, 134, 11, 0);
+      }
+    }
+
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      padding-top: 25px;
+      height: 0;
+      background: #000;
+      border-radius: var(--s-radius-lg);
+      overflow: hidden;
+    }
+    .video-wrapper video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+    }
+  </style>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page" style="padding-top: 60px; padding-bottom: 80px;">
+
+    <!-- Section Heading -->
+    <div class="s-section-heading px-3 mb-2">
+      <h3>Learning Pathway</h3>
+      <p style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); margin: 0 0 6px;">Follow the guided linear curriculum to master wool breeding, shearing, and trade.</p>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- The roadmap linear timeline -->
+    <div class="s-roadmap-timeline" id="roadmapContainer">
+      <!-- Dynamic roadmap cards will be rendered here -->
+    </div>
+
+    <!-- Hidden Trigger for Video Player Modal -->
+    <button id="videoPlayerBtn" data-bs-toggle="modal" data-bs-target="#videoPlayer" style="display: none;"></button>
+
+    <!-- Video Player Modal -->
+    <div class="modal fade" id="videoPlayer" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 2px solid var(--s-accent);">
+          <div class="modal-header">
+            <h5 class="modal-title" id="videoTitle" style="font-family: var(--s-font-serif); font-weight: 600; color: var(--s-fg); font-size: 1.1rem;">Lesson Video</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body p-2">
+            <div class="video-wrapper">
+              <video id="video" controls>
+                <source id="videoSrc" src="" type="video/mp4" />
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    var points = [
+      {
+        content: "Breeds & Genetics",
+        desc: "Learn about the characteristics, origins, and fiber quality of sheep breeds.",
+        icon: "🐑",
+        redirect: "/Learning/video",
+        subpoints: [
+          {
+            content: "Breeding & Feeding Cycles",
+            isCompleted: true,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Nutritional Schedules",
+            isCompleted: true,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Pasture Management",
+            isCompleted: true,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+        ],
+      },
+      {
+        content: "Shearing Techniques",
+        desc: "Master proper, low-stress shearing skills to keep fleece intact and sheep safe.",
+        icon: "✂️",
+        redirect: "/Learning/video",
+        subpoints: [
+          {
+            content: "Shearing Setup & Tools",
+            isCompleted: true,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Blade Angles & Safety",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Fleece Skirting Guidelines",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+        ],
+      },
+      {
+        content: "Grading & Quality Analysis",
+        desc: "Assess fiber diameter, staple length, color, and vegetable matter.",
+        icon: "🔬",
+        redirect: "/Learning/video",
+        subpoints: [
+          {
+            content: "Micron Count Analysis",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Staple Strength Evaluation",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Fleece Classification",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+        ],
+      },
+      {
+        content: "Marketing & Valuation",
+        desc: "Navigate price indices, MSP, negotiations, and listing parameters.",
+        icon: "📈",
+        redirect: "/Learning/video",
+        subpoints: [
+          {
+            content: "Price Indices Tracking",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Negotiation Strategies",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Logistics & Shipment Prep",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+        ],
+      },
+      {
+        content: "Flock Health & Hygiene",
+        desc: "Routine veterinary care, deworming, vaccines, and biosecurity setups.",
+        icon: "🩺",
+        redirect: "/Learning/video",
+        subpoints: [
+          {
+            content: "Vaccination Rotations",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+          {
+            content: "Parasite Control Basics",
+            isCompleted: false,
+            video: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+          },
+        ],
+      },
+    ];
+
+    // Load state from local storage
+    var localPoints = JSON.parse(localStorage.getItem("points"));
+    if (localPoints && localPoints.length === points.length) {
+      // Preserve local state but merge any static details
+      points.forEach((pt, idx) => {
+        pt.subpoints.forEach((sub, subIdx) => {
+          if (localPoints[idx].subpoints[subIdx]) {
+            sub.isCompleted = localPoints[idx].subpoints[subIdx].isCompleted;
+          }
+        });
+      });
+    }
+    localStorage.setItem("points", JSON.stringify(points));
+
+    const container = document.getElementById("roadmapContainer");
+    let activeFound = false;
+
+    points.forEach((point, index) => {
+      // Determine overall topic status
+      const totalSubs = point.subpoints.length;
+      const completedSubs = point.subpoints.filter(s => s.isCompleted).length;
+      const allCompleted = totalSubs > 0 && completedSubs === totalSubs;
+      
+      let nodeClass = "";
+      if (allCompleted) {
+        nodeClass = "completed";
+      } else if (!activeFound && totalSubs > 0) {
+        nodeClass = "active";
+        activeFound = true;
+      }
+
+      // Create roadmap node EJS/HTML
+      const node = document.createElement("div");
+      node.className = `s-roadmap-node ${nodeClass}`;
+      
+      // Node marker
+      const marker = document.createElement("div");
+      marker.className = "s-roadmap-marker";
+      if (allCompleted) {
+        marker.innerHTML = "✓";
+      } else {
+        marker.textContent = String(index + 1).padStart(2, '0');
+      }
+      node.appendChild(marker);
+
+      // Card wrapper
+      const card = document.createElement("div");
+      card.className = "s-roadmap-card";
+      
+      // Card Header
+      const cardHeader = document.createElement("div");
+      cardHeader.className = "s-roadmap-card-header";
+      cardHeader.innerHTML = `
+        <div>
+          <span style="font-family: var(--s-font-mono); font-size: 0.65rem; color: var(--s-accent); letter-spacing: 0.05em; text-transform: uppercase;">Module ${index + 1}</span>
+          <h4 class="mb-0" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.05rem; color: var(--s-fg);">${point.content}</h4>
+        </div>
+        <div style="font-size: 1.4rem;">${point.icon}</div>
+      `;
+      card.appendChild(cardHeader);
+
+      // Card description
+      const cardDesc = document.createElement("p");
+      cardDesc.style.fontFamily = "var(--s-font-sans)";
+      cardDesc.style.fontSize = "0.82rem";
+      cardDesc.style.color = "var(--s-muted-fg)";
+      cardDesc.style.marginBottom = "12px";
+      cardDesc.style.lineHeight = "1.4";
+      cardDesc.textContent = point.desc;
+      card.appendChild(cardDesc);
+
+      // Sub-lessons checklist
+      if (point.subpoints && point.subpoints.length > 0) {
+        const lessonsHeader = document.createElement("div");
+        lessonsHeader.style.fontFamily = "var(--s-font-mono)";
+        lessonsHeader.style.fontSize = "0.62rem";
+        lessonsHeader.style.textTransform = "uppercase";
+        lessonsHeader.style.letterSpacing = "0.05em";
+        lessonsHeader.style.color = "var(--s-muted-fg)";
+        lessonsHeader.style.borderTop = "1px solid var(--s-border)";
+        lessonsHeader.style.paddingTop = "8px";
+        lessonsHeader.textContent = `Lessons (${completedSubs}/${totalSubs})`;
+        card.appendChild(lessonsHeader);
+
+        point.subpoints.forEach((subpoint, subIdx) => {
+          const lessonItem = document.createElement("div");
+          
+          let lessonStatusClass = "locked";
+          let indicatorHtml = '<ion-icon name="lock-closed-outline" style="color: var(--s-border-hover);"></ion-icon>';
+
+          // Logic to determine subpoint status in timeline sequence
+          if (subpoint.isCompleted) {
+            lessonStatusClass = "completed";
+            indicatorHtml = '<ion-icon name="checkmark-circle" style="color: #2D6A4F;"></ion-icon>';
+          } else {
+            // First uncompleted lesson in the module (if module is active or all previous modules completed)
+            const prevCompleted = index === 0 || points[index-1].subpoints.every(s => s.isCompleted);
+            const prevSubCompleted = subIdx === 0 || point.subpoints[subIdx-1].isCompleted;
+            
+            if (prevCompleted && prevSubCompleted) {
+              lessonStatusClass = "active";
+              indicatorHtml = '<div class="s-pulse-dot"></div>';
+            }
+          }
+
+          lessonItem.className = `s-lesson-item ${lessonStatusClass}`;
+          lessonItem.innerHTML = `
+            <div class="s-lesson-indicator">${indicatorHtml}</div>
+            <span style="font-family: var(--s-font-sans); font-size: 0.84rem; color: var(--s-fg);">${subpoint.content}</span>
+            <ion-icon name="play-circle-outline" class="ms-auto" style="font-size: 1.1rem; color: var(--s-accent);"></ion-icon>
+          `;
+
+          // Handle lesson click
+          if (lessonStatusClass !== "locked") {
+            lessonItem.addEventListener("click", function(e) {
+              e.stopPropagation();
+              
+              // Set modal player video
+              document.getElementById("videoTitle").textContent = "Lesson: " + subpoint.content;
+              document.getElementById("videoSrc").setAttribute("src", subpoint.video);
+              document.getElementById("video").load();
+              document.getElementById("videoPlayerBtn").click();
+
+              // Mark complete on watch
+              if (!subpoint.isCompleted) {
+                subpoint.isCompleted = true;
+                localStorage.setItem("points", JSON.stringify(points));
+                
+                // Reload roadmap after close or delay to show progress update
+                setTimeout(() => {
+                  location.reload();
+                }, 800);
+              }
+            });
+          }
+
+          card.appendChild(lessonItem);
+        });
+      }
+
+      // Add click to module header to view full video gallery
+      cardHeader.style.cursor = "pointer";
+      cardHeader.addEventListener("click", () => {
+        location.href = `${point.redirect}?module=${index}`;
+      });
+
+      node.appendChild(card);
+      container.appendChild(node);
+    });
+  </script>
+</body>
+</html>

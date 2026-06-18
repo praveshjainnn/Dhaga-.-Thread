@@ -1,0 +1,174 @@
+<!-- App-Sidebar (Serif Style) -->
+<div class="modal fade panelbox panelbox-left" id="sidebarPanel" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body p-0">
+                <!-- Profile Box -->
+                <div class="profileBox pt-3 pb-3 px-3 d-flex align-items-center gap-3">
+                    <img src="/assets/img/sample/avatar/avatar1.jpg" alt="Profile Avatar" class="s-avatar" style="width: 44px; height: 44px;"/>
+                    <div class="in">
+                        <strong id="sidebarUserName" style="font-family: var(--s-font-serif); font-size: 1.05rem;">Demo User</strong>
+                        <div class="text-muted" id="sidebarUserRole" style="font-family: var(--s-font-mono); font-size: 0.65rem; letter-spacing: 0.05em; text-transform: uppercase;">User</div>
+                    </div>
+                    <a href="#" class="btn btn-link btn-icon sidebar-close ms-auto" data-bs-dismiss="modal" style="min-height: auto; padding: 0;">
+                        <ion-icon name="close-outline" style="font-size: 1.6rem; color: var(--s-fg);"></ion-icon>
+                    </a>
+                </div>
+
+                <!-- Balance -->
+                <div class="sidebar-balance px-3 py-3">
+                    <div class="small-caps" style="font-size: 0.62rem; color: var(--s-muted-fg); margin-bottom: 4px;">Wool Earnings</div>
+                    <div class="in">
+                        <h1 class="amount" style="font-family: var(--s-font-serif); font-size: 1.8rem; font-weight: 600; margin: 0; color: var(--s-fg);">₹25,612.50</h1>
+                    </div>
+                </div>
+
+                <!-- Menu -->
+                <div class="small-caps px-3 pt-3 pb-1" style="font-size: 0.62rem; color: var(--s-accent);">Menu</div>
+                <ul class="listview flush transparent no-line image-listview px-2">
+                    <li>
+                        <a href="/index" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-primary"><ion-icon name="pie-chart-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">Overview</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Woolkart" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-primary"><ion-icon name="cart-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">WoolKart</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Learning" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-primary"><ion-icon name="school-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">Learning</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Services" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-primary"><ion-icon name="construct-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">Services</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/Statistics" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-primary"><ion-icon name="bar-chart-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">Statistics</div>
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Account -->
+                <div class="small-caps px-3 pt-3 pb-1" style="font-size: 0.62rem; color: var(--s-accent);">Account</div>
+                <ul class="listview flush transparent no-line image-listview px-2">
+                    <li>
+                        <a href="/overview/profile" class="item d-flex align-items-center gap-2 py-2">
+                            <div class="icon-box bg-secondary"><ion-icon name="person-outline"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem;">My Profile</div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="item d-flex align-items-center gap-2 py-2" onclick="logout(); return false;">
+                            <div class="icon-box bg-danger"><ion-icon name="log-out-outline" style="color: var(--s-accent) !important;"></ion-icon></div>
+                            <div class="in font-sans" style="font-size: 0.95rem; color: var(--s-accent);">Log Out</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- * App Sidebar -->
+
+<!-- App Bottom Menu -->
+<div class="appBottomMenu">
+    <a href="/index" class="item" id="nav-overview">
+        <div class="col">
+            <ion-icon name="pie-chart-outline"></ion-icon>
+            <strong>Overview</strong>
+        </div>
+    </a>
+    <a href="/Woolkart" class="item" id="nav-woolkart">
+        <div class="col">
+            <ion-icon name="cart-outline"></ion-icon>
+            <strong>WoolKart</strong>
+        </div>
+    </a>
+    <a href="/Learning" class="item" id="nav-learning">
+        <div class="col">
+            <ion-icon name="school-outline"></ion-icon>
+            <strong>Learning</strong>
+        </div>
+    </a>
+    <a href="/Services" class="item" id="nav-services">
+        <div class="col">
+            <ion-icon name="construct-outline"></ion-icon>
+            <strong>Services</strong>
+        </div>
+    </a>
+    <a href="/Statistics" class="item" id="nav-statistics">
+        <div class="col">
+            <ion-icon name="bar-chart-outline"></ion-icon>
+            <strong>Stats</strong>
+        </div>
+    </a>
+</div>
+<!-- * App Bottom Menu -->
+
+<!-- Scripts to dynamically set active page and user cookies -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // 1. Auto-highlight active navigation tabs
+        var path = window.location.pathname.toLowerCase();
+        if (path.indexOf('/woolkart') !== -1) {
+            document.getElementById('nav-woolkart').classList.add('active');
+        } else if (path.indexOf('/learning') !== -1) {
+            document.getElementById('nav-learning').classList.add('active');
+        } else if (path.indexOf('/services') !== -1) {
+            document.getElementById('nav-services').classList.add('active');
+        } else if (path.indexOf('/statistics') !== -1) {
+            document.getElementById('nav-statistics').classList.add('active');
+        } else {
+            // default to overview if on home/farmer/seller etc.
+            document.getElementById('nav-overview').classList.add('active');
+        }
+
+        // 2. Populate sidebar profile using cookies if present
+        function getCookieVal(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) return decodeURIComponent(match[2]);
+            return null;
+        }
+
+        var userName = getCookieVal('userID') ? 'Demo User' : 'Guest';
+        var userRole = getCookieVal('role') || 'User';
+
+        try {
+            var userCookie = getCookieVal('user');
+            if (userCookie) {
+                var userData = JSON.parse(userCookie);
+                if (userData.name) userName = userData.name;
+                if (userData.role) userRole = userData.role;
+            }
+        } catch (e) {
+            console.error("Error reading user cookie", e);
+        }
+
+        var sidebarNameEl = document.getElementById('sidebarUserName');
+        var sidebarRoleEl = document.getElementById('sidebarUserRole');
+        if (sidebarNameEl) sidebarNameEl.textContent = userName;
+        if (sidebarRoleEl) sidebarRoleEl.textContent = '🌾 ' + userRole;
+    });
+
+    function logout() {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "role=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie = "user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        window.location.href = "/Pages/app-login.html";
+    }
+
+    function openSidebar() {
+        var modal = new bootstrap.Modal(document.getElementById('sidebarPanel'));
+        modal.show();
+    }
+</script>

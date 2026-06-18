@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'KnitKraft — Farmer Dashboard' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page">
+
+    <!-- ─── BALANCE CARD ─────────────────────────────── -->
+    <div class="s-balance-card">
+      <div style="display: flex; align-items: flex-start; justify-content: space-between;">
+        <div>
+          <div class="s-balance-eyebrow">Total Wool Earnings</div>
+          <div class="s-balance-amount">₹25,612.50</div>
+        </div>
+        <div style="font-size: 2.2rem; opacity: 0.85;">🐑</div>
+      </div>
+
+      <hr class="s-balance-rule"/>
+
+      <!-- Action Row -->
+      <div class="s-action-row">
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#withdrawActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-down-outline"></ion-icon>
+          </div>
+          <span>Withdraw</span>
+        </a>
+        <a href="#" class="s-action-btn" data-bs-toggle="modal" data-bs-target="#sendActionSheet">
+          <div class="s-action-icon">
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </div>
+          <span>Send</span>
+        </a>
+        <a href="/Pages/orders.ejs" class="s-action-btn">
+          <div class="s-action-icon">
+            <ion-icon name="cube-outline"></ion-icon>
+          </div>
+          <span>Orders</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ─── STATS GRID ────────────────────────────────── -->
+    <div class="s-stats-grid">
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📈 Monthly Income</div>
+        <div class="s-stat-val green">₹552.95</div>
+      </div>
+      <div class="s-stat-card">
+        <div class="s-stat-eyebrow">📉 Expenses</div>
+        <div class="s-stat-val gold">₹86.45</div>
+      </div>
+    </div>
+
+    <!-- ─── QUICK ACCESS ──────────────────────────────── -->
+    <div class="s-section-heading">
+      <h3>Quick Access</h3>
+      <span class="s-rule-accent"></span>
+    </div>
+    <div class="s-quick-grid" style="margin-bottom: 24px;">
+      <a href="/Services/shearing-service" class="s-quick-link">
+        <div class="s-quick-link-icon">✂️</div>
+        <span>Shearing</span>
+      </a>
+      <a href="/Services/transport-services" class="s-quick-link">
+        <div class="s-quick-link-icon">🚚</div>
+        <span>Transport</span>
+      </a>
+      <a href="/Services/warehouse-services" class="s-quick-link">
+        <div class="s-quick-link-icon">🏭</div>
+        <span>Warehouse</span>
+      </a>
+      <a href="/Woolkart" class="s-quick-link">
+        <div class="s-quick-link-icon">🛒</div>
+        <span>WoolKart</span>
+      </a>
+    </div>
+
+    <!-- ─── PROGRESS TIMELINE CARD ───────────────────── -->
+    <div class="s-progress-card">
+      <div class="s-progress-header">
+        <h3>📋 Progress Timeline</h3>
+        <div class="s-batch-row">
+          <div style="display: flex; align-items: center; gap: 8px; flex: 1;">
+            <label style="font-family: var(--s-font-mono); font-size: 0.68rem; text-transform: uppercase; color: var(--s-muted-fg); white-space: nowrap; margin-bottom: 0;">Batch:</label>
+            <select class="s-select" id="batchSelect" onchange="FillProgressTimeline(this.value)">
+              <option value="0">B4TIJ (Batch 1)</option>
+              <option value="1">B8KIJ (Batch 2)</option>
+              <option value="2">B9KIM (Batch 3)</option>
+            </select>
+          </div>
+          <a href="/assets/img/certificate.jpeg" id="certDownloadBtn" class="s-cert-btn">
+            🏆 Certificate
+          </a>
+        </div>
+      </div>
+
+      <div class="s-progress-body">
+        <div class="accordion" id="progressAccordion">
+          <div class="accordion-item">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#progressCollapse" id="batchName">
+              🌾 Batch 1 (B4TIJ)
+            </button>
+            <div id="progressCollapse" class="accordion-collapse collapse show" data-bs-parent="#progressAccordion">
+              <div class="accordion-body px-2 py-3">
+                <div class="s-timeline" id="progressTimeline">
+                  <!-- Filled by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       MODALS
+  ══════════════════════════════════════════════════════ -->
+
+  <!-- Weather Modal (Bootstrap) -->
+  <div class="modal fade" id="DialogIconedweather" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content overflow-hidden">
+        <div class="modal-body p-0 text-center" style="position: relative; height: 260px; background: linear-gradient(135deg, #1f2937, #111827); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+          <div style="font-size: 3.5rem; margin-bottom: 10px;">☀️</div>
+          <div style="font-family: var(--s-font-serif); font-size: 2.5rem; font-weight: 600; line-height: 1;">31&ordm;C</div>
+          <div style="font-family: var(--s-font-sans); font-size: 1.1rem; font-weight: 500; margin-top: 6px;">Clear Sky</div>
+          <div style="font-family: var(--s-font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--s-accent); margin-top: 8px;">Hisar, Haryana</div>
+        </div>
+        <div class="modal-footer" style="padding: 12px;">
+          <button type="button" class="btn btn-secondary w-100" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Withdraw Action Sheet -->
+  <div class="modal fade" id="withdrawActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Withdraw Funds</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="s-field">
+              <label for="account2d">From Account</label>
+              <select id="account2d">
+                <option value="0">Savings (*** 5019)</option>
+                <option value="1">Investment (*** 6212)</option>
+              </select>
+            </div>
+            <div class="s-field">
+              <label for="withdrawAmount">Amount (₹)</label>
+              <input type="number" id="withdrawAmount" placeholder="Enter amount to withdraw" value="100"/>
+            </div>
+            <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Process Withdrawal</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Send Action Sheet -->
+  <div class="modal fade" id="sendActionSheet" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Send Funds</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="s-field">
+              <label for="account2">From Account</label>
+              <select id="account2">
+                <option value="0">Savings (*** 5019)</option>
+                <option value="1">Investment (*** 6212)</option>
+              </select>
+            </div>
+            <div class="s-field">
+              <label for="sendTo">Recipient Bank ID / UPI</label>
+              <input type="text" id="sendTo" placeholder="e.g. 9876543210@upi"/>
+            </div>
+            <div class="s-field">
+              <label for="sendAmount">Amount (₹)</label>
+              <input type="number" id="sendAmount" placeholder="Enter amount to send" value="100"/>
+            </div>
+            <button type="button" class="s-btn-primary w-100" data-bs-dismiss="modal">Transfer Funds</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    var PROGRESS_ARRAY = [
+      "🐑 Raising livestock", "✂️ Shearing", "🗂️ Skirting & Sorting",
+      "🧼 Cleaning", "🧺 Carding", "🪮 Combing", "🧵 Spinning",
+      "🎨 Dyeing", "🧶 Weaving", "✨ Finishing", "📦 Ready to ship"
+    ];
+
+    var BATCHES = [
+      { name: "B4TIJ", progress: 3, lastUpdated: 1627776000000 },
+      { name: "B8KIJ", progress: 7, lastUpdated: 1627776000000 },
+      { name: "B9KIM", progress: 4, lastUpdated: 1627776000000 },
+    ];
+    var CERTIFICATES = ["/assets/img/Batch 1.jpg", "/assets/img/Batch 2.jpg"];
+
+    function FillProgressTimeline(i) {
+      i = parseInt(i) || 0;
+      var certBtn = document.getElementById('certDownloadBtn');
+      var batchNameEl = document.getElementById('batchName');
+      var timeline = document.getElementById('progressTimeline');
+
+      if (certBtn) certBtn.href = CERTIFICATES[i] || '#';
+      if (batchNameEl) batchNameEl.textContent = '🌾 ' + BATCHES[i].name + ' (Batch ' + (i + 1) + ')';
+      if (!timeline) return;
+
+      timeline.innerHTML = '';
+      var progress = BATCHES[i].progress;
+      var lastUpdated = BATCHES[i].lastUpdated;
+
+      PROGRESS_ARRAY.forEach(function(prg, index) {
+        var dotClass = 's-timeline-dot';
+        if (index < progress) dotClass += ' done';
+        else if (index === progress) dotClass += ' active';
+
+        var timestamp = (index === progress && lastUpdated)
+          ? '<span class="s-timeline-ts">Last updated: ' + new Date(lastUpdated).toLocaleString() + '</span>'
+          : '';
+
+        timeline.innerHTML += '<div class="s-timeline-item">' +
+          '<div class="' + dotClass + '"></div>' +
+          '<div class="s-timeline-text">' + prg + timestamp + '</div>' +
+          '</div>';
+      });
+    }
+
+    // Initialize progress timeline
+    FillProgressTimeline(0);
+
+    function updateProgress(index) {
+      $.ajax({
+        url: '/api/updateProgress',
+        type: 'POST',
+        data: { progress: index, id: getCookie('userID') },
+        success: function(data) {
+          document.cookie = 'progress=' + index + ';' + document.cookie;
+          FillProgressTimeline(document.getElementById('batchSelect').value);
+        },
+        error: function(err) { console.log(err); }
+      });
+    }
+  </script>
+</body>
+</html>

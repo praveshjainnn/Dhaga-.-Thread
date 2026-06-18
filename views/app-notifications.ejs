@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('partials/serif-head', { title: 'KnitKraft — Notifications' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('partials/serif-header', { showBack: true }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page" style="padding-bottom: 90px; padding-left: 0; padding-right: 0;">
+
+    <!-- Section Heading -->
+    <div class="s-section-heading px-3">
+      <h3>Notification Center</h3>
+      <p style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); margin: 0 0 6px;">Stay updated with transaction updates, logistics alerts, and system notifications.</p>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Notification List -->
+    <div style="border-top: 1px solid var(--s-border);">
+      
+      <!-- Item 1 -->
+      <div class="s-notif-item">
+        <div class="s-notif-dot"></div>
+        <div class="s-notif-content">
+          <div class="s-notif-title">
+            <strong>Payment Received</strong>: John sent you <b>₹2,500.00</b> for Batch B4TIJ.
+          </div>
+          <div class="s-notif-time">Today, 10:30 AM</div>
+        </div>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="s-notif-item">
+        <div class="s-notif-dot"></div>
+        <div class="s-notif-content">
+          <div class="s-notif-title">
+            <strong>Logistics Dispatch</strong>: Wool batch shipped successfully via transport ID #t01.
+          </div>
+          <div class="s-notif-time">Yesterday, 4:15 PM</div>
+        </div>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="s-notif-item">
+        <div class="s-notif-content">
+          <div class="s-notif-title">
+            <strong>Profile Updated</strong>: Address modifications saved successfully.
+          </div>
+          <div class="s-notif-time">2 days ago, 9:00 AM</div>
+        </div>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="s-notif-item">
+        <div class="s-notif-content">
+          <div class="s-notif-title">
+            <strong>Class Confirmation</strong>: Virtual training session approved by instructor Sunita Devi.
+          </div>
+          <div class="s-notif-time">3 days ago, 11:30 AM</div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="assets/js/base.js"></script>
+</body>
+</html>

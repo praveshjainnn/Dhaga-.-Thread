@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Purchase Produce' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="s-loader-content">
+      <div class="s-loader-spinner"></div>
+      <h3 class="s-loader-brand">Dhaga<em>.Thread</em> 🧶</h3>
+      <div class="s-loader-text">Preparing checkout...</div>
+    </div>
+  </div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: true }) %>
+
+  <!-- App Capsule -->
+  <main id="appCapsule" class="s-page" style="padding-top: 60px; padding-bottom: 100px;">
+    
+    <!-- Product Splash Card -->
+    <div class="section mt-3 px-3">
+      <div class="card s-product-card p-3 mb-3" style="border-radius: var(--s-radius-lg);">
+        <div class="text-center mb-3">
+          <img id="productImage" src="/assets/img/sample/photo/Alpaca wool.png" alt="Product Image" class="rounded" style="width: 60%; aspect-ratio: 1; object-fit: cover; box-shadow: var(--s-shadow-md);" />
+        </div>
+        
+        <h2 class="mb-1" id="productName" style="font-family: var(--s-font-serif); font-weight: 700; color: var(--s-fg); font-size: 1.6rem;">Alpaca Fleece Wool</h2>
+        
+        <div class="d-flex align-items-center mb-2">
+          <div class="text-warning me-2" style="font-size: 0.85rem;">
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star-half"></ion-icon>
+          </div>
+          <span style="font-family: var(--s-font-mono); font-size: 0.75rem; color: var(--s-muted-fg);">4.5 (154 reviews)</span>
+          <span class="ms-auto badge bg-success" style="font-family: var(--s-font-mono); font-size: 0.62rem; letter-spacing: 0.05em; text-transform: uppercase;">In Stock</span>
+        </div>
+
+        <p id="productDesc" style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg); line-height: 1.5; margin-bottom: 0;">
+          Premium alpaca fleece wool, highly regarded for its thermal properties, lightness, and incredibly soft touch. Hand-cleaned and verified by KnitKraft experts.
+        </p>
+      </div>
+    </div>
+
+    <!-- Purchase Options -->
+    <div class="section px-3">
+      <div class="card p-3 mb-3">
+        <div class="row">
+          <!-- Package Size Selection -->
+          <div class="col-6 mb-3">
+            <div class="s-field">
+              <label for="packageSize" style="font-family: var(--s-font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg); margin-bottom: 6px; display: block;">Package Size</label>
+              <select id="packageSize" style="font-size: 0.85rem; padding: 8px 12px; height: auto;">
+                <option value="1">Small Bale (10kg)</option>
+                <option value="2">Medium Bale (25kg)</option>
+                <option value="3">Large Bale (50kg)</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Quantity Counter -->
+          <div class="col-6 mb-3">
+            <label style="font-family: var(--s-font-mono); font-size: 0.68rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--s-muted-fg); margin-bottom: 6px; display: block;">Quantity (Bales)</label>
+            <div class="d-flex align-items-center" style="border: 1px solid var(--s-border); border-radius: var(--s-radius-sm); overflow: hidden; background: var(--s-muted);">
+              <button class="btn p-2 border-0" type="button" onclick="adjustQty(-1)" style="min-height: auto; width: 40px; color: var(--s-fg);"><ion-icon name="remove-outline"></ion-icon></button>
+              <input type="number" id="quantityVal" class="form-control text-center border-0 p-0" value="1" min="1" readonly style="background: transparent; font-family: var(--s-font-mono); font-weight: 600; font-size: 0.95rem; color: var(--s-fg); height: 38px; pointer-events: none;" />
+              <button class="btn p-2 border-0" type="button" onclick="adjustQty(1)" style="min-height: auto; width: 40px; color: var(--s-fg);"><ion-icon name="add-outline"></ion-icon></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Summary -->
+        <div class="pt-2 border-top d-flex justify-content-between align-items-center">
+          <div>
+            <span style="font-family: var(--s-font-mono); font-size: 0.75rem; color: var(--s-muted-fg); text-transform: uppercase;">Unit Price:</span>
+            <span id="displayUnitPrice" style="font-family: var(--s-font-mono); font-weight: 600; font-size: 0.95rem; color: var(--s-fg); margin-left: 4px;">₹14 / kg</span>
+          </div>
+          <div class="text-end">
+            <span style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg);">Total Estimate:</span>
+            <h4 class="mb-0" id="totalAmountText" style="font-family: var(--s-font-serif); font-weight: 700; color: var(--s-accent); font-size: 1.45rem;">₹140.00</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase Action Button -->
+    <div class="fixed-bar" style="position: fixed; bottom: 56px; left: 0; right: 0; background: var(--s-bg); border-top: 1px solid var(--s-border); padding: 12px 16px; z-index: 100;">
+      <div class="row">
+        <div class="col-6">
+          <button class="btn btn-outline-secondary w-100 py-2" onclick="history.back()" style="border-radius: var(--s-radius-sm); font-family: var(--s-font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;">Cancel</button>
+        </div>
+        <div class="col-6">
+          <button class="s-btn-primary w-100 py-2" data-bs-toggle="modal" data-bs-target="#addCardActionSheet" style="border-radius: var(--s-radius-sm); font-family: var(--s-font-mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; min-height: auto;">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card/Payment Action Sheet -->
+    <div class="modal fade action-sheet" id="addCardActionSheet" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 2px solid var(--s-accent);">
+          <div class="modal-header">
+            <h5 class="modal-title" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.1rem; color: var(--s-fg);">Complete Purchase</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="min-height: auto;"></button>
+          </div>
+          <div class="modal-body">
+            <div class="action-sheet-content">
+              <form id="paymentForm">
+                <!-- Payment Amount summary -->
+                <div class="mb-3 p-2 text-center rounded" style="background: var(--s-muted); border: 1px solid var(--s-border);">
+                  <div style="font-family: var(--s-font-mono); font-size: 0.68rem; text-transform: uppercase; color: var(--s-muted-fg); letter-spacing: 0.05em;">Order Amount</div>
+                  <h3 class="mb-0" id="modalAmountDisplay" style="font-family: var(--s-font-serif); font-weight: 700; color: var(--s-accent); font-size: 1.5rem;">₹140.00</h3>
+                </div>
+
+                <!-- Card Number Input -->
+                <div class="s-field">
+                  <label for="cardnumber1">Card Number</label>
+                  <input type="number" id="cardnumber1" placeholder="Enter Card Number" />
+                </div>
+
+                <div class="row">
+                  <!-- Expiry Date selection -->
+                  <div class="col-6">
+                    <div class="s-field">
+                      <label>Expiry Date</label>
+                      <div class="row g-1">
+                        <div class="col-6">
+                          <select id="exp-month" style="padding: 8px; font-size: 0.8rem;">
+                            <option value="01">01</option><option value="02">02</option><option value="03">03</option>
+                            <option value="04">04</option><option value="05">05</option><option value="06">06</option>
+                            <option value="07">07</option><option value="08">08</option><option value="09">09</option>
+                            <option value="10">10</option><option value="11">11</option><option value="12">12</option>
+                          </select>
+                        </div>
+                        <div class="col-6">
+                          <select id="exp-year" style="padding: 8px; font-size: 0.8rem;">
+                            <option value="2026">2026</option><option value="2027">2027</option>
+                            <option value="2028">2028</option><option value="2029">2029</option>
+                            <option value="2030">2030</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- CVV -->
+                  <div class="col-6">
+                    <div class="s-field">
+                      <label for="cardcvv">
+                        CVV
+                        <a href="#" class="ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="3-digit number on the back of your card" style="text-decoration: underline;">Info</a>
+                      </label>
+                      <input type="number" id="cardcvv" class="pininp" placeholder="000" />
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row my-2">
+                  <p class="carousel-slider-divider">OR</p>
+                </div>
+
+                <!-- Wallet Option -->
+                <div class="row">
+                  <div class="col-6">
+                    <div class="s-field">
+                      <label>Wallet Balance</label>
+                      <div style="font-family: var(--s-font-mono); font-weight: 600; color: var(--s-fg); padding: 8px 12px; background: var(--s-muted); border-radius: var(--s-radius-sm); border: 1px solid var(--s-border);">
+                        ₹20,000
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="s-field">
+                      <label for="walletPin">
+                        Wallet PIN
+                        <a href="#" class="ms-1" data-bs-toggle="tooltip" data-bs-placement="top" title="4-digit secure wallet PIN (Demo: 1111)" style="text-decoration: underline;">Info</a>
+                      </label>
+                      <input type="number" id="walletPin" class="pininp" placeholder="1111" />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Button -->
+                <div class="form-group basic mt-3" style="text-align: center">
+                  <button type="button" class="s-btn-primary w-100 py-2" id="confirmBtn" style="min-height: auto;">
+                    Confirm Payment
+                  </button>
+                  <a href="#" class="d-inline-block mt-2" style="font-family: var(--s-font-mono); font-size: 0.75rem; text-transform: uppercase; color: var(--s-muted-fg); text-decoration: underline;">Negotiate Price</a>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Modal Dialog -->
+    <div class="modal fade dialogbox" id="DialogIconedSuccess" data-bs-backdrop="static" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 4px solid #2D6A4F;">
+          <div class="modal-icon text-success mt-3" style="font-size: 3rem;">
+            <ion-icon name="checkmark-circle-outline"></ion-icon>
+          </div>
+          <div class="modal-header pt-1">
+            <h5 class="modal-title" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.25rem;">Order Successful!</h5>
+          </div>
+          <div class="modal-body" style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg);">
+            Your payment was processed and your wool purchase is confirmed. Delivery transit tracking details will be generated shortly.
+          </div>
+          <div class="modal-footer pb-3 border-0">
+            <div class="btn-inline" style="justify-content: center; width: 100%;">
+              <button class="s-btn-primary px-4 py-2" data-bs-dismiss="modal" onclick="location.href='/Woolkart'" style="min-height: auto;">Return to Marketplace</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Error Modal Dialog -->
+    <div class="modal fade dialogbox" id="DialogIconedDanger" data-bs-backdrop="static" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" style="background: var(--s-bg); border-top: 4px solid #8B0000;">
+          <div class="modal-icon text-danger mt-3" style="font-size: 3rem;">
+            <ion-icon name="close-circle-outline"></ion-icon>
+          </div>
+          <div class="modal-header pt-1">
+            <h5 class="modal-title" style="font-family: var(--s-font-serif); font-weight: 600; font-size: 1.25rem;">Transaction Failed</h5>
+          </div>
+          <div class="modal-body" style="font-family: var(--s-font-sans); font-size: 0.88rem; color: var(--s-muted-fg);">
+            The payment could not be completed. Please verify card details or secure wallet PIN and try again.
+          </div>
+          <div class="modal-footer pb-3 border-0">
+            <div class="btn-inline" style="justify-content: center; width: 100%;">
+              <button class="btn btn-secondary px-4 py-2" data-bs-dismiss="modal" style="min-height: auto;">Dismiss</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Navigation -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ========= JS Files =========  -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+
+  <script>
+    // URL Search parameters parsing
+    const urlParams = new URLSearchParams(window.location.search);
+    const productTitle = urlParams.get('title') || 'Alpaca Fleece Wool';
+    const rawPrice = parseFloat(urlParams.get('price')) || 14;
+    const image = urlParams.get('image') || 'Alpaca wool.png';
+    const desc = urlParams.get('desc') || '';
+
+    // Update DOM
+    document.getElementById('productName').textContent = productTitle;
+    document.getElementById('displayUnitPrice').textContent = '₹' + rawPrice + ' / kg';
+    document.getElementById('productImage').src = '/assets/img/sample/photo/' + image;
+    if (desc) {
+      document.getElementById('productDesc').textContent = desc;
+    }
+
+    // Dynamic calculations
+    let currentQty = 1;
+    function getBaleWeight() {
+      const pkg = document.getElementById('packageSize').value;
+      if (pkg === "1") return 10;
+      if (pkg === "2") return 25;
+      if (pkg === "3") return 50;
+      return 10;
+    }
+
+    function calculateTotal() {
+      const weight = getBaleWeight();
+      const total = rawPrice * weight * currentQty;
+      
+      // Update UI
+      document.getElementById('totalAmountText').textContent = '₹' + total.toLocaleString();
+      document.getElementById('calPrice').textContent = total.toLocaleString();
+      document.getElementById('modalAmountDisplay').textContent = '₹' + total.toLocaleString();
+    }
+
+    function adjustQty(amount) {
+      const newQty = currentQty + amount;
+      if (newQty >= 1) {
+        currentQty = newQty;
+        document.getElementById('quantityVal').value = currentQty;
+        calculateTotal();
+      }
+    }
+
+    // Listeners
+    document.getElementById('packageSize').addEventListener('change', calculateTotal);
+    calculateTotal(); // initial run
+
+    // Confirm Payment flow
+    const confirmBtn = document.getElementById('confirmBtn');
+    const walletPin = document.getElementById('walletPin');
+    const addCardModalEl = document.getElementById('addCardActionSheet');
+    const successModal = new bootstrap.Modal(document.getElementById('DialogIconedSuccess'));
+    const errorModal = new bootstrap.Modal(document.getElementById('DialogIconedDanger'));
+
+    confirmBtn.addEventListener('click', function() {
+      // Hide payment modal
+      const paymentModal = bootstrap.Modal.getInstance(addCardModalEl);
+      paymentModal.hide();
+
+      // Show loader spinner
+      loader.setAttribute('style', 'display: flex;');
+      loader.querySelector('.s-loader-text').textContent = "Authorizing transaction...";
+      
+      setTimeout(function() {
+        loader.setAttribute('style', 'display: none;');
+        
+        // Demo credential validation
+        if (walletPin.value === "1111" || document.getElementById('cardnumber1').value.length > 5) {
+          successModal.show();
+        } else {
+          errorModal.show();
+        }
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

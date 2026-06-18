@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,viewport-fit=cover"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="theme-color" content="#FAFAF8"/>
+  <title>Dhaga.Thread — Sign In</title>
+  <meta name="description" content="Sign in to Dhaga.Thread, the all-in-one wool industry platform."/>
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png" sizes="32x32"/>
+  <link rel="stylesheet" href="../assets/css/src/bootstrap/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../assets/css/serif.css"/>
+  <link rel="manifest" href="../__manifest.json"/>
+</head>
+<body>
+<div class="s-glow"></div>
+
+<div class="s-auth-page">
+
+  <!-- Brand -->
+  <div class="s-auth-brand">
+    <h1>Dhaga.Thread</h1>
+    <p>Modernizing the Wool Sector</p>
+  </div>
+
+  <!-- Card -->
+  <div class="s-auth-card">
+
+    <!-- Section label -->
+    <div class="s-section-label" style="margin-bottom:20px;">
+      <span class="line"></span>
+      <span class="text">Sign In</span>
+      <span class="line"></span>
+    </div>
+
+    <h2 class="s-auth-title">Welcome back.</h2>
+    <p class="s-auth-subtitle">Select your role and enter your credentials to continue.</p>
+
+    <% if (typeof error !== 'undefined' && error) { %>
+      <div class="alert alert-danger" style="font-family: var(--s-font-sans); font-size: 0.85rem; border-radius: var(--s-radius); margin-bottom: 15px; background: rgba(220, 53, 69, 0.1); border-color: rgba(220, 53, 69, 0.2); color: #dc3545; padding: 10px 12px;">
+        <%= error %>
+      </div>
+    <% } %>
+
+    <form action="./login" method="post" id="loginForm">
+
+      <!-- Role -->
+      <div style="margin-bottom:20px;">
+        <div style="font-family:var(--s-font-mono);font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--s-muted-fg);margin-bottom:10px;">I am a</div>
+        <div class="s-role-grid">
+          <button type="button" class="s-role-btn active" onclick="selectRole('farmer',this)">🌾<br>Farmer</button>
+          <button type="button" class="s-role-btn" onclick="selectRole('seller',this)">🛒<br>Seller</button>
+          <button type="button" class="s-role-btn" onclick="selectRole('teacher',this)">📚<br>Teacher</button>
+          <button type="button" class="s-role-btn" onclick="selectRole('transport',this)">🚚<br>Transport</button>
+          <button type="button" class="s-role-btn" onclick="selectRole('warehouse',this)">🏭<br>Warehouse</button>
+          <button type="button" class="s-role-btn" onclick="selectRole('service',this)">🔧<br>Service</button>
+        </div>
+        <input type="hidden" name="role" id="roleInput" value="farmer"/>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--s-border);margin:0 0 20px;"/>
+
+      <div class="s-field">
+        <label for="email1">E-mail address</label>
+        <input type="email" id="email1" name="email" placeholder="your@email.com" autocomplete="email"/>
+      </div>
+
+      <div class="s-field">
+        <label for="password1">Password</label>
+        <input type="password" id="password1" name="password" placeholder="••••••••" autocomplete="current-password"/>
+      </div>
+
+      <button type="submit" class="s-btn-primary" id="loginBtn">Sign In</button>
+
+    </form>
+
+    <div class="s-auth-links">
+      <a href="../Pages/app-register.html">Create account</a>
+      <a href="../Pages/app-forgot-password.html">Forgot password?</a>
+    </div>
+
+    <!-- Demo note -->
+    <div style="margin-top:20px;padding:12px 14px;background:var(--s-muted);border-radius:var(--s-radius);border-left:2px solid var(--s-accent);">
+      <div style="font-family:var(--s-font-mono);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--s-accent);margin-bottom:4px;">Demo Mode</div>
+      <div style="font-family:var(--s-font-sans);font-size:0.82rem;color:var(--s-muted-fg);line-height:1.5;">Select any role and enter any credentials to explore the platform.</div>
+    </div>
+
+  </div>
+
+  <!-- Footer note -->
+  <p style="margin-top:32px;font-family:var(--s-font-mono);font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--s-muted-fg);text-align:center;">
+    Ministry of Textiles, Government of India
+  </p>
+
+</div>
+
+<script src="../assets/js/lib/bootstrap.bundle.min.js"></script>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="../assets/js/base.js"></script>
+<script>
+  function selectRole(role, btn) {
+    document.querySelectorAll('.s-role-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('roleInput').value = role;
+  }
+  try {
+    if (typeof getCookie === 'function' && getCookie('token')) {
+      var r = getCookie('role');
+      var m = {farmer:'/farmer',warehouse:'/warehouse',seller:'/seller',teacher:'/teacher',service:'/service',transport:'/transport'};
+      window.location.href = m[r] || '/farmer';
+    }
+  } catch(e) {}
+  document.getElementById('loginForm').addEventListener('submit', function() {
+    var b = document.getElementById('loginBtn');
+    b.textContent = 'Signing in…';
+    b.style.opacity = '0.7';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../partials/serif-head', { title: 'Dhaga.Thread — Services' }) %>
+<body>
+  <div class="s-glow"></div>
+
+  <!-- Shared Header -->
+  <%- include('../partials/serif-header', { showBack: false }) %>
+
+  <!-- Main Content Page Area -->
+  <main class="s-page">
+
+    <!-- Section Title -->
+    <div class="s-section-heading">
+      <h3>Available Services</h3>
+      <span class="s-rule-accent"></span>
+    </div>
+
+    <!-- Farm Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1"><%= translation.FarmServices %></div>
+      <ul class="s-services-list mb-4">
+        <li>
+          <a href="/Services/shearing-service" class="s-service-item">
+            <div class="s-service-icon">✂️</div>
+            <span><%= translation.ShearingServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="/Services/sorting-service" class="s-service-item">
+            <div class="s-service-icon">🗂️</div>
+            <span>Sorting Services</span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="/Services/breed-service2" class="s-service-item">
+            <div class="s-service-icon">🐑</div>
+            <span><%= translation.SheepBreedingServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="/Services/fodder-nutrition-service" class="s-service-item">
+            <div class="s-service-icon">🌾</div>
+            <span><%= translation.FodderNutritionServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="/Services/veterinary-service" class="s-service-item">
+            <div class="s-service-icon">🩺</div>
+            <span><%= translation.VeterinaryServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Quality Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1"><%= translation.QualityServices %></div>
+      <ul class="s-services-list mb-4">
+        <li>
+          <a href="/Services/wool-grading" class="s-service-item">
+            <div class="s-service-icon">🔬</div>
+            <span><%= translation.WoolGrading %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+        <li>
+          <a href="/Services/farm-equipment-suppliers" class="s-service-item">
+            <div class="s-service-icon">⚙️</div>
+            <span><%= translation.FarmEquipmentSuppliers %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Warehouse Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1"><%= translation.WarehouseServices %></div>
+      <ul class="s-services-list mb-4">
+        <li>
+          <a href="/Services/warehouse-services" class="s-service-item">
+            <div class="s-service-icon">🏭</div>
+            <span><%= translation.WareHouseServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Transportation Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1"><%= translation.TransportationServices %></div>
+      <ul class="s-services-list mb-4">
+        <li>
+          <a href="/Services/transport-services" class="s-service-item">
+            <div class="s-service-icon">🚚</div>
+            <span><%= translation.TransportationServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Financial Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1"><%= translation.FinancialServices %></div>
+      <ul class="s-services-list mb-4">
+        <li>
+          <a href="/Services/insurance-service" class="s-service-item">
+            <div class="s-service-icon">🛡️</div>
+            <span><%= translation.InsuranceServices %></span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Support Services Group -->
+    <div class="s-services-group">
+      <div class="small-caps mb-2 px-1">KnitKraft Customer Support</div>
+      <ul class="s-services-list mb-2">
+        <li>
+          <a href="/Services/bandu-support-service" class="s-service-item">
+            <div class="s-service-icon">🤝</div>
+            <span>BANDU Support Service</span>
+            <ion-icon name="chevron-forward-outline" class="s-service-arrow"></ion-icon>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- Shared Bottom Nav & Sidebar Modal -->
+  <%- include('../partials/serif-nav') %>
+
+  <!-- ══════════════════════════════════════════════════════
+       JS FILES
+  ══════════════════════════════════════════════════════ -->
+  <script src="/assets/js/lib/bootstrap.bundle.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="/assets/js/plugins/splide/splide.min.js"></script>
+  <script src="/assets/js/base.js"></script>
+</body>
+</html>
