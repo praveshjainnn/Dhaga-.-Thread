@@ -135,7 +135,7 @@
     <div id="loader">
       <div class="s-loader-content">
         <div class="s-loader-spinner"></div>
-        <h3 class="s-loader-brand">Knit<em>Kraft</em> 🧶</h3>
+        <h3 class="s-loader-brand">Dhaga.<em>Thread</em> 🧶</h3>
         <div class="s-loader-text">Loading warehouse services...</div>
       </div>
     </div>
@@ -351,19 +351,39 @@
           });
         }
         // get my current location
-        navigator.geolocation.getCurrentPosition(
-          successLocation,
-          errorLocation,
-          {
-            enableHighAccuracy: true,
-          }
-        );
-        function successLocation(position) {
-          setupMap([position.coords.longitude, position.coords.latitude]);
+        // Set Mapbox access token first
+        mapboxgl.accessToken = mapboxToken;
+
+        var defaultCenter = [77.2090, 28.6139]; // New Delhi, India
+
+        // Initialize map with default center immediately so it's NOT empty
+        setupMap(defaultCenter);
+
+        // Try to get geolocation to center/re-sort if possible in background
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            function (position) {
+              var userCenter = [position.coords.longitude, position.coords.latitude];
+              try {
+                // Clear map container to re-initialize
+                document.getElementById("map").innerHTML = "";
+                document.getElementById("geocoder-container").innerHTML = "";
+                setupMap(userCenter);
+              } catch (e) {
+                console.error("Error re-initializing map with user location:", e);
+              }
+            },
+            function (err) {
+              console.log("Geolocation error/denied, staying at default:", err);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 5000
+            }
+          );
         }
-        function errorLocation() {
-          setupMap([-2.24, 53.48]);
-        }
+
+
         function setupMap(center) {
           const map = new mapboxgl.Map({
             container: "map",
@@ -708,7 +728,7 @@
           console.log(d);
           return Math.round(d / 1000);
         }
-        mapboxgl.accessToken = mapboxToken;
+        
       </script>
       <!-- <div class="floatingChatButton">
         <a href="../Pages/chat.html" class="btn btn-success btn-lg">
