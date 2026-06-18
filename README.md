@@ -1,4 +1,5 @@
-# <p align="center"><img align="center" width="90" src="screenshots/logo.png"/><br>Dhaga.Thread</p>
+# <p align="center"><img align="center" width="90" src="screenshots/logo.png"/><br>Dhaga.Thread -  Build for Good
+National Student Hackathon for Social Impact</p>
 
 <h2 align="center">A Premium Digital Ecosystem for India's Wool Shepherds, Artisans & Buyers</h2>
 
