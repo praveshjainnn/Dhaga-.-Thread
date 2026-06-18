@@ -1,5 +1,5 @@
-# <p align="center"><img align="center" width="90" src="screenshots/logo.png"/><br>Dhaga.Thread -  Build for Good
-National Student Hackathon for Social Impact</p>
+# <p align="center"><img align="center" width="90" src="screenshots/logo.png"/><br>Dhaga.Thread
+<h2 align="center">  Build for Good -  National Student Hackathon for Social Impact
 
 <h2 align="center">A Premium Digital Ecosystem for India's Wool Shepherds, Artisans & Buyers</h2>
 
@@ -13,7 +13,7 @@ National Student Hackathon for Social Impact</p>
 </p>
 
 <hr/>
-
+<h2 align="center">  🌐 Live Demo   Website: https://dhagathread.vercel.app</p>
 <p align="center">
   <b>Dhaga.Thread</b> is a comprehensive, role-based mobile-web platform designed to digitize, streamline, and empower India's fragmented wool supply chain — from sheep shearing and sorting to quality testing, escrow-backed trading, and final fabric creation.<br/><br/>
   Built for <b>India's 3+ million shepherds and artisans</b> who have no unified digital infrastructure, Dhaga.Thread brings transparency, fair pricing, and financial dignity to an industry that has remained largely unorganized since independence.
