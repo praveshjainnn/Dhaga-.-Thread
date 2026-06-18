@@ -1,6 +1,6 @@
 {
-    "name": "Knitkraft",
-    "short_name": "Knitkraft",
+    "name": "Dhaga.Thread",
+    "short_name": "Dhaga.Thread",
     "start_url": "index.html",
     "display": "standalone",
     "scope" : "/",

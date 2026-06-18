@@ -64,7 +64,7 @@
         </p>
         
         <div class="s-field mb-3">
-          <input type="text" id="linkBox" placeholder="e.g. KnitKraftClassroom101" style="font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: 0.05em;" />
+          <input type="text" id="linkBox" placeholder="e.g. Dhaga.ThreadClassroom101" style="font-family: var(--s-font-mono); text-transform: uppercase; letter-spacing: 0.05em;" />
         </div>
         
         <div class="row g-2">
@@ -231,7 +231,7 @@
     // Fetch and populate scheduled meetings
     function loadMeetings() {
       const container = $("#allMeetings");
-      $.getJSON("https://knitkraft.onrender.com/api/getMeetings", function (data) {
+      $.getJSON("https://Dhaga.Thread.onrender.com/api/getMeetings", function (data) {
         container.empty();
         if (data.status === "success" && data.meetings && data.meetings.length > 0) {
           let hasFarmerMeet = false;
@@ -307,7 +307,7 @@
       
       $.ajax({
         type: "POST",
-        url: "https://knitkraft.onrender.com/api/deleteMeet",
+        url: "https://Dhaga.Thread.onrender.com/api/deleteMeet",
         data: { id: id },
         success: function (data) {
           loader.setAttribute("style", "display: none;");
@@ -343,7 +343,7 @@
         const form = $(this);
         $.ajax({
           type: "POST",
-          url: "https://knitkraft.onrender.com/api/bookMeet",
+          url: "https://Dhaga.Thread.onrender.com/api/bookMeet",
           data: form.serialize(),
           success: function (data) {
             loader.setAttribute("style", "display: none;");
