@@ -23,7 +23,7 @@ function logout(){
     })();
     location.href = '../../Pages/app-login'
 }
-const Dhaga.Thread = {
+const Dhaga = {
     PWA: {
         enable: true,
     },
@@ -87,7 +87,7 @@ function goBackAnimation() {
 var goBackButton = document.querySelectorAll(".goBack");
 goBackButton.forEach(function (el) {
     el.addEventListener("click", function () {
-        if (Dhaga.Thread.Animation.goBack) {
+        if (Dhaga.Animation.goBack) {
             goBackAnimation();
         }
         else {
@@ -101,7 +101,7 @@ goBackButton.forEach(function (el) {
 
 //-----------------------------------------------------------------------
 // RTL (Right to Left)
-if (Dhaga.Thread.RTL.enable) {
+if (Dhaga.RTL.enable) {
     var pageHTML = document.querySelector("html")
     pageHTML.dir = "rtl"
     document.querySelector("body").classList.add("rtl-mode")
@@ -430,12 +430,12 @@ function androidAddtoHome() {
 }
 function AddtoHome(time, once) {
     if (once) {
-        var AddHomeStatus = localStorage.getItem("Dhaga.ThreadAddtoHome");
+        var AddHomeStatus = localStorage.getItem("DhagaAddtoHome");
         if (AddHomeStatus === "1" || AddHomeStatus === 1) {
             // already showed up
         }
         else {
-            localStorage.setItem("Dhaga.ThreadAddtoHome", 1)
+            localStorage.setItem("DhagaAddtoHome", 1)
             window.addEventListener('load', () => {
                 if (navigator.standalone) {
                     // if app installed ios home screen
@@ -489,19 +489,19 @@ function AddtoHome(time, once) {
 
 //-----------------------------------------------------------------------
 // Dark Mode
-var checkDarkModeStatus = localStorage.getItem("Dhaga.ThreadDarkmode");
+var checkDarkModeStatus = localStorage.getItem("DhagaDarkmode");
 var switchDarkMode = document.querySelectorAll(".dark-mode-switch");
 var pageBodyActive = pageBody.classList.contains("dark-mode");
 
 // Check if enable as default
-if (Dhaga.Thread.Dark_Mode.default) {
+if (Dhaga.Dark_Mode.default) {
     pageBody.classList.add("dark-mode");
 }
 
 // Local Dark Mode
-if (Dhaga.Thread.Dark_Mode.local_mode.enable) {
-    var nightStart = Dhaga.Thread.Dark_Mode.local_mode.start_time;
-    var nightEnd = Dhaga.Thread.Dark_Mode.local_mode.end_time;
+if (Dhaga.Dark_Mode.local_mode.enable) {
+    var nightStart = Dhaga.Dark_Mode.local_mode.start_time;
+    var nightEnd = Dhaga.Dark_Mode.local_mode.end_time;
     var currentDate = new Date();
     var currentHour = currentDate.getHours();
     if (currentHour >= nightStart || currentHour < nightEnd) {
@@ -511,7 +511,7 @@ if (Dhaga.Thread.Dark_Mode.local_mode.enable) {
 }
 
 // Auto Detect Dark Mode
-if (Dhaga.Thread.Dark_Mode.auto_detect.enable)
+if (Dhaga.Dark_Mode.auto_detect.enable)
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
         pageBody.classList.add("dark-mode");
     }
@@ -536,17 +536,17 @@ else {
 }
 switchDarkMode.forEach(function (el) {
     el.addEventListener("click", function () {
-        var darkmodeCheck = localStorage.getItem("Dhaga.ThreadDarkmode");
+        var darkmodeCheck = localStorage.getItem("DhagaDarkmode");
         var bodyCheck = pageBody.classList.contains('dark-mode');
         if (darkmodeCheck === 1 || darkmodeCheck === "1" || bodyCheck) {
             pageBody.classList.remove("dark-mode");
-            localStorage.setItem("Dhaga.ThreadDarkmode", "0");
+            localStorage.setItem("DhagaDarkmode", "0");
             switchDarkModeCheck(false);
         }
         else {
             pageBody.classList.add("dark-mode")
             switchDarkModeCheck(true);
-            localStorage.setItem("Dhaga.ThreadDarkmode", "1");
+            localStorage.setItem("DhagaDarkmode", "1");
         }
     })
 })
@@ -560,7 +560,7 @@ function testMode() {
     var colorSuccess = "color: #1DCC70; font-weight:bold;"
 
     console.clear();
-    console.log("%cDhaga.Thread", "font-size: 1.3em; font-weight: bold; color: #FFF; background-color: #6236FF; padding: 10px 120px; margin-bottom: 16px;")
+    console.log("%cDhaga", "font-size: 1.3em; font-weight: bold; color: #FFF; background-color: #6236FF; padding: 10px 120px; margin-bottom: 16px;")
     console.log("%c🚀 TEST MODE ACTIVATED ..!", "font-size: 1em; font-weight: bold; margin: 4px 0;");
 
     function testModeMsg(value, msg) {
@@ -579,13 +579,13 @@ function testMode() {
     }
 
     testModeSubtitle("THEME SETTINGS")
-    testModeMsg(Dhaga.Thread.PWA.enable, "PWA")
-    testModeMsg(Dhaga.Thread.Dark_Mode.default, "Set dark mode as default theme")
-    testModeMsg(Dhaga.Thread.Dark_Mode.local_mode.enable, "Local dark mode (between " + Dhaga.Thread.Dark_Mode.local_mode.start_time + ":00 and " + Dhaga.Thread.Dark_Mode.local_mode.end_time + ":00)")
-    testModeMsg(Dhaga.Thread.Dark_Mode.auto_detect.enable, "Auto detect dark mode")
-    testModeMsg(Dhaga.Thread.RTL.enable, "RTL")
-    testModeMsg(Dhaga.Thread.Test.enable, "Test mode")
-    testModeMsg(Dhaga.Thread.Test.alert, "Test mode alert")
+    testModeMsg(Dhaga.PWA.enable, "PWA")
+    testModeMsg(Dhaga.Dark_Mode.default, "Set dark mode as default theme")
+    testModeMsg(Dhaga.Dark_Mode.local_mode.enable, "Local dark mode (between " + Dhaga.Dark_Mode.local_mode.start_time + ":00 and " + Dhaga.Dark_Mode.local_mode.end_time + ":00)")
+    testModeMsg(Dhaga.Dark_Mode.auto_detect.enable, "Auto detect dark mode")
+    testModeMsg(Dhaga.RTL.enable, "RTL")
+    testModeMsg(Dhaga.Test.enable, "Test mode")
+    testModeMsg(Dhaga.Test.alert, "Test mode alert")
 
     testModeSubtitle("PREVIEW INFOS")
     // Resolution
@@ -621,10 +621,10 @@ function testMode() {
     }
 
     testModeSubtitle("ANIMATIONS")
-    testModeMsg(Dhaga.Thread.Animation.goBack, "Go Back")
+    testModeMsg(Dhaga.Animation.goBack, "Go Back")
 }
 function themeTesting() {
-    var word = Dhaga.Thread.Test.word;
+    var word = Dhaga.Test.word;
     var value = "";
     window.addEventListener('keypress', function (e) {
         value = value + String.fromCharCode(e.keyCode).toLowerCase();
@@ -633,7 +633,7 @@ function themeTesting() {
         }
         if (value == word || value === word) {
             value = ""
-            if (Dhaga.Thread.Test.alert) {
+            if (Dhaga.Test.alert) {
                 var content = document.getElementById("appCapsule")
                 content.appendChild(document.createElement("div")).className = "test-alert-wrapper";
                 var alert =
@@ -643,7 +643,7 @@ function themeTesting() {
                     +
                     "<div class='text'><h1 class='text-light mb-05'>🤖</h1><strong>"
                     +
-                    Dhaga.Thread.Test.alertMessage
+                    Dhaga.Test.alertMessage
                     +
                     "</strong></div></div></div>"
                 var wrapper = document.querySelector(".test-alert-wrapper")
@@ -659,7 +659,7 @@ function themeTesting() {
     })
 }
 
-if (Dhaga.Thread.Test.enable) {
+if (Dhaga.Test.enable) {
     themeTesting();
 }
 //-----------------------------------------------------------------------

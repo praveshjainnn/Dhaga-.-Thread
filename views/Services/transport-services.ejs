@@ -553,7 +553,7 @@
           var form = $("#requestTransportForm");
           $.ajax({
             type: "POST",
-            url: "https://Dhaga.Thread.onrender.com/api/bookTransport",
+            url: "/api/bookTransport",
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
               console.log(data);
@@ -616,7 +616,8 @@
             } else {
               transportsListFill(TRANSPORTS, e.target.value);
             }
-          };          // add markers to map
+          };
+          // add markers to map
           TRANSPORTS.forEach((marker) => {
             var dist = calculateDistance(center, marker.location);
             var el = document.createElement("div");

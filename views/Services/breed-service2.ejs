@@ -271,7 +271,7 @@
           var form = $("#requestBreedForm");
           $.ajax({
             type: "POST",
-            url: "https://Dhaga.Thread.onrender.com/api/bookService",
+            url: "/api/bookService",
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
               console.log(data);

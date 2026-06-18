@@ -231,7 +231,7 @@
     // Fetch and populate scheduled meetings
     function loadMeetings() {
       const container = $("#allMeetings");
-      $.getJSON("https://Dhaga.Thread.onrender.com/api/getMeetings", function (data) {
+      $.getJSON("/api/getMeetings", function (data) {
         container.empty();
         if (data.status === "success" && data.meetings && data.meetings.length > 0) {
           let hasFarmerMeet = false;
@@ -307,7 +307,7 @@
       
       $.ajax({
         type: "POST",
-        url: "https://Dhaga.Thread.onrender.com/api/deleteMeet",
+        url: "/api/deleteMeet",
         data: { id: id },
         success: function (data) {
           loader.setAttribute("style", "display: none;");
@@ -343,7 +343,7 @@
         const form = $(this);
         $.ajax({
           type: "POST",
-          url: "https://Dhaga.Thread.onrender.com/api/bookMeet",
+          url: "/api/bookMeet",
           data: form.serialize(),
           success: function (data) {
             loader.setAttribute("style", "display: none;");

@@ -338,7 +338,7 @@
           var form = $("#requestWareHouseForm");
           $.ajax({
             type: "POST",
-            url: "https://Dhaga.Thread.onrender.com/api/bookWarehouse",
+            url: "/api/bookWarehouse",
             data: form.serialize(), // serializes the form's elements.
             success: function (data) {
               console.log(data);
