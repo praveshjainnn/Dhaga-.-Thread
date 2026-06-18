@@ -207,7 +207,7 @@ We welcome contributions — especially from developers who understand rural Ind
 5. Open a Pull Request
 
 Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting.
-
+## 📸 Screenshots
 ## 🛍️ Marketplace
 
 <p align="center">
@@ -227,7 +227,7 @@ Please read our [Contributing Guidelines](CONTRIBUTING.md) before submitting.
 </p>
 ---
 
-## 📸 Screenshots
+
 
 
 
